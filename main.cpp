@@ -1,74 +1,139 @@
 #include <SFML/Graphics.hpp>
+#include "Game/PacMan.h"
 #include <iostream>
 
-int main() {
+using namespace std;
+
+/**
+ * @brief Este metodo es el encargado de crear la ventana de bienvenida y según el botón presionado por el usuario
+ * desplegar la ventana del juego o salir de este.
+ * @param null Este método no recibe parámetros.
+ * @return Retorna la ventana del juego.
+ */
+
+int main()
+{
+    // Crea una ventana de 640x480x32 con el título SFML window
+    sf::RenderWindow window(sf::VideoMode(900, 700), "Inicio");
+
+    // Activa la sincronización vertical (60 fps)
+    window.setVerticalSyncEnabled(true);
+
+    // Creamos un objeto fondo
+    sf::Texture backgroundPic;
+    // Intentamos cargarla
+    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Bienvenida.png"))
     {
-
-        float x_coord = 70;
-        float y_coord = 70;
-
-        sf::RenderWindow window(sf::VideoMode(900, 600), "SFML works!");
-
-        sf::CircleShape nave(15,3);
-        nave.setPosition(x_coord, y_coord);
-        nave.setFillColor(sf::Color::Blue);
-        using namespace std;
-
-        sf::Texture texture;
-        if (!texture.loadFromFile("Images/Jugador.png")) {
-            std::cout << "Error load image";
-        }
-
-
-        while (window.isOpen())
-        {
-            sf::Event event;
-            while (window.pollEvent(event))
-            {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
-            //eventos del teclado
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-                if(x_coord > 875){
-                    x_coord  += 0;
-                }
-                else{
-                    x_coord  += 0.2;}
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-                if(x_coord < 2){
-                    x_coord  += 0;
-                }
-                else{
-                    x_coord  -= 0.2;}
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                if(y_coord < 2){
-                    y_coord  += 0;
-                }
-                else{
-                    y_coord  -= 0.2;}
-
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                if(y_coord > 575){
-                    y_coord  += 0;
-                }
-                else{
-                    y_coord  += 0.2;}
-
-            }
-
-            window.clear();
-            nave.setPosition(x_coord, y_coord); //cambia la posición de la nave por el evento de teclado
-            window.draw(nave);
-            window.display();
-        }
-
-        return 0;
+        return EXIT_FAILURE;
     }
+
+    //Se crea el Sprite
+    sf::Sprite sprite;
+    // Asignamos la textura al sprite
+    sprite.setTexture(backgroundPic);
+
+    // Creamos un objeto fuente
+    sf::Font font;
+    // Intentamos cargarla
+    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
+    {
+        return EXIT_FAILURE;
+    }
+
+    // Creamos un objeto titulo, con su respectivo t3exto, fuente y tamaño.
+    sf::Text titulo("Bienvenid@",font,48);
+    // Color del título
+    titulo.setColor(sf::Color(0, 255, 0));
+    // Posición del título
+    titulo.setPosition(325, 30);
+
+    // Creamos otro texto con la misma fuente
+    sf::Text dificultad("Seleccione el boton Iniciar para comenzar el juego", font, 32);
+    // Color del título
+    dificultad.setColor(sf::Color(0, 255, 0));
+    // Posición del texto
+    dificultad.setPosition(105, 135);
+
+    // Creamos un objeto boton
+    sf::Texture iniciar;
+    // Intentamos cargarla
+    if (!iniciar.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/btnIniciar.png"))
+    {
+        return EXIT_FAILURE;
+    }
+
+    //Se crea el Sprite
+    sf::Sprite iniciarImage;
+    // Asignamos el boton al sprite
+    iniciarImage.setTexture(iniciar);
+    iniciarImage.setPosition(300,250);
+
+    // Creamos un objeto boton
+    sf::Texture salir;
+    // Intentamos cargarla
+    if (!salir.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/btnSalir.png"))
+    {
+        return EXIT_FAILURE;
+    }
+
+    // Creamos otro texto con la misma fuente
+    sf::Text salirT("Seleccione el boton Salir para dejar el juego", font, 32);
+    // Color del título
+    salirT.setColor(sf::Color(0, 255, 0));
+    // Posición del texto
+    salirT.setPosition(130, 450);
+
+    //Se crea el Sprite
+    sf::Sprite salirImage;
+    // Asignamos el boton al sprite
+    salirImage.setTexture(salir);
+    salirImage.setPosition(300,525);
+
+    // Game Loop mientras la ventana esté abierta
+    while (window.isOpen())
+    {
+        // Creamos un objeto evento
+        sf::Event event;
+        // Procesamos la pila de eventos
+        while (window.pollEvent(event))
+        {
+            // Si el evento es de tipo Closed cerramos la ventana
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::MouseButtonPressed:
+                {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition( window );
+                    sf::Vector2f mousePosF( static_cast<float>( mousePos.x ), static_cast<float>( mousePos.y ) );
+                    if (iniciarImage.getGlobalBounds().contains( mousePosF ) )
+                    {
+                        PacMan pacman;
+                        return pacman.game();
+                    }
+                    if (salirImage.getGlobalBounds().contains( mousePosF ) )
+                    {
+                        window.close();
+                    }
+                }
+                    break;
+            }
+        }
+
+        // Limpiamos la pantalla
+        window.clear();
+
+        // Dibujamos en pantalla
+        window.draw(sprite);
+        window.draw(titulo);
+        window.draw(dificultad);
+        window.draw(salirT);
+
+        window.draw(iniciarImage);
+        window.draw(salirImage);
+
+        // Actualizamos la ventana
+        window.display();
+    }
+    return 0;
 }
