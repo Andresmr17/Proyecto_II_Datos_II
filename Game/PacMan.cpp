@@ -3,6 +3,7 @@
 
 #include "PacMan.h"
 #include "../block.h"
+#include "../points.h"
 //#include "fields.h"
 //#include "enemy.h"
 //#include "enemyFly.h"
@@ -26,12 +27,19 @@ bool juego = true;
 
 int randomEnemy = 0;
 
+bool press_flag = true;
+
+
+bool flag_up = true;
+bool flag_down = true;
+bool flag_right = true;
+bool flag_left = true;
+
 
 //enemy obj[1];
 
-void buildShelter(block blockObj[33], sf::Texture &Obstaculo)
+void buildObstacles(block blockObj[7], sf::Texture &Obstaculo)
 {
-
     blockObj[0]= block(70, 475, 500, 70, Obstaculo);
     blockObj[1]= block(640, 475, 200, 70, Obstaculo);
     blockObj[2]= block(720, 105, 120, 370, Obstaculo);
@@ -40,7 +48,9 @@ void buildShelter(block blockObj[33], sf::Texture &Obstaculo)
     blockObj[5]= block(70, 310, 300, 100, Obstaculo);
     blockObj[6]= block(70, 110, 230, 130, Obstaculo);
 
+}
 
+void buildPoints(){
 
 }
 
@@ -119,13 +129,18 @@ int PacMan::game()
         std::cout << "Error load image";
     }
     //create blok array
-    block blockObj[33];
-    float bblockX = 150;
-    float bblockY = 450;
-    float tempx = 0;
-    float tempy = 0;
+    block blockObj[7];
     //build meteor objets
-    buildShelter(blockObj, Obstaculo);
+    buildObstacles(blockObj, Obstaculo);
+
+
+    sf::Texture Point;
+    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/"))
+    {
+        std::cout << "Error load image";
+    }
+    points pointsObj[40];
+    //buildPoints(pointsObj)
 
     sf::Texture enemyTexture;
     sf::Texture enemyTexture1;
@@ -135,7 +150,7 @@ int PacMan::game()
     }
 
     //******************************************************************************************
-    sf::RenderWindow window(sf::VideoMode(900, 650), "PacManCE");
+    sf::RenderWindow window(sf::VideoMode(910, 650), "PacManCE");
 
     //Creación de formas y variables.
     sf::Texture backgroundPic;
@@ -194,13 +209,11 @@ int PacMan::game()
     clock.restart();
 
     //window.setFramerateLimit(160);
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
 
         // chek if the close window button is clicked on.
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
@@ -210,55 +223,134 @@ int PacMan::game()
         //only when the time since last update is greate than 1/60 update the world.
 
 
-        if (timeSinceLastUpdate > timePerFrame)
-        {
+        if (timeSinceLastUpdate > timePerFrame) {
 
             // get keyboard input.
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            {
-                player1.setTexture(&Left);
-                if (player1.playerX <= 2){
-                    player1.playerX = player1.playerX - 0;
+            if(press_flag) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                    press_flag = false;
+
+
+                    player1.setTexture(&Left);
+                    for (int i = 0; i < 7; i++) {
+                        if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
+                            if (flag_right && flag_up && flag_down) {
+                                //player1.playerX += 0;
+                                flag_left = false;
+                            } else {
+                                flag_left = true;
+                                flag_up = true;
+                                flag_right = true;
+                                flag_down = true;
+
+                            }
+                        }
+                    }
+
+                    if (flag_left) {
+                        if (player1.playerX <= 2) {
+                            player1.playerX = player1.playerX - 0;
+                        } else {
+                            player1.playerX = player1.playerX - player1.playerSpeed;
+                        }
+                    }
+
 
                 }
-                else{
-                    player1.playerX = player1.playerX - player1.playerSpeed;
-                }
-
+                press_flag = true;
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            {
-                player1.setTexture(&Right);
-                if(player1.playerX > 850){
-                    player1.playerX  += 0;
-                }
 
-                else{
-                    player1.playerX = player1.playerX + player1.playerSpeed;
+            if(press_flag) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                    press_flag = false;
+                    player1.setTexture(&Right);
+                    for (int i = 0; i < 7; i++) {
+                        if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
+                            if (flag_left && flag_up && flag_down) {
+                                //player1.playerX += 0;
+                                flag_right = false;
+                            } else {
+                                flag_right = true;
+                                flag_up = true;
+                                flag_left = true;
+                                flag_down = true;
+                            }
+                        }
+                    }
+
+                    if (flag_right) {
+                        if (player1.playerX > 860) {
+                            player1.playerX += 0;
+                        } else {
+                            player1.playerX = player1.playerX + player1.playerSpeed;
+                        }
+                    }
+
+                }
+                press_flag = true;
             }
 
+            if(press_flag) {
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                    press_flag = false;
+                    player1.setTexture(&Up);
+                    for (int i = 0; i < 7; i++) {
+
+                        if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
+
+                            if (flag_left && flag_right && flag_down) {
+                                //player1.playerX += 0;
+                                flag_up = false;
+                            } else {
+                                flag_up = true;
+                                flag_right = true;
+                                flag_left = true;
+                                flag_down = true;
+                            }
+                        }
+                    }
+
+                    if (flag_up) {
+                        if (player1.playerY < 52) {
+                            player1.playerY += 0;
+                        } else {
+                            player1.playerY = player1.playerY - player1.playerSpeed;
+                        }
+                    }
+
+                }
+                press_flag = true;
             }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-                player1.setTexture(&Up);
-                if (player1.playerY < 52) {
-                    player1.playerY += 0;
-                }
-                else if(blockObj[0].getGlobalBounds().intersects(player1.getGlobalBounds())){
-                    player1.playerX  += 0;
-                }
-                else {
-                    player1.playerY = player1.playerY - player1.playerSpeed;
-                }
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-                player1.setTexture(&Down);
-                    if (player1.playerY > 548) {
-                        player1.playerY += 0;
-                    } else {
-                        player1.playerY = player1.playerY + player1.playerSpeed;
+            if(press_flag) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                    press_flag = false;
+                    player1.setTexture(&Down);
+                    for (int i = 0; i < 7; i++) {
+                        if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
+                            if (flag_left && flag_up && flag_right) {
+                                //player1.playerX += 0;
+                                flag_down = false;
+                            } else {
+                                flag_down = true;
+                                flag_right = true;
+                                flag_up = true;
+                                flag_left = true;
+                            }
+                        }
+                    }
+
+                    if (flag_down) {
+                        if (player1.playerY > 548) {
+                            player1.playerY += 0;
+                        } else {
+                            player1.playerY = player1.playerY + player1.playerSpeed;
+                        }
                     }
                 }
+                press_flag = true;
+            }
 
 
 
@@ -276,20 +368,16 @@ int PacMan::game()
 
 
 
+
             //Muestra las vidas del jugador
-            if (playerLives == 3)
-            {
+            if (playerLives == 3) {
                 window.draw(live1);
                 window.draw(live2);
                 window.draw(live3);
-            }
-            else if (playerLives == 2)
-            {
+            } else if (playerLives == 2) {
                 window.draw(live1);
                 window.draw(live2);
-            }
-            else if (playerLives == 1)
-            {
+            } else if (playerLives == 1) {
                 window.draw(live1);
             }
             window.draw(player1);
@@ -311,19 +399,15 @@ int PacMan::game()
         }
 
         //Menu control Exit game or Play again
-        if (juego == false)
-        {
+        if (juego == false) {
             window.draw(messageTXT);
             window.draw(arrow);
 
-            if (enemyLeft > 0)
-            {
+            if (enemyLeft > 0) {
                 messageTXT.setString("You Lose!");
                 window.draw(messageTXT);
                 win = true;
-            }
-            else if(win == false)
-            {
+            } else if (win == false) {
                 messageTXT.setString("You Won!");
                 window.draw(messageTXT);
                 win = true;
@@ -333,7 +417,8 @@ int PacMan::game()
         }
 
         window.display();
-
     }
+
+
     return 0;
 }
