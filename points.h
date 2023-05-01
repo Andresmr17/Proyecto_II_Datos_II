@@ -1,4 +1,4 @@
-#progma once
+#pragma once
 #include <SFML/Graphics.hpp>
 
 

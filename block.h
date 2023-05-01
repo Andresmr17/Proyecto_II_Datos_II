@@ -1,8 +1,5 @@
 #pragma once
-
-
 #include <SFML/Graphics.hpp>
-
 
 class block :public sf::RectangleShape {
 

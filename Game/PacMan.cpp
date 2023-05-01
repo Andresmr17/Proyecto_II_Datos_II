@@ -3,12 +3,12 @@
 
 #include "PacMan.h"
 #include "../block.h"
-#include "../points.h"
 //#include "fields.h"
 //#include "enemy.h"
 //#include "enemyFly.h"
 #include "../Player/lives.h"
 #include "../Player/player.h"
+#include "../points.h"
 #include <thread>
 #include <iostream>
 #include <string>
@@ -36,9 +36,8 @@ bool flag_right = true;
 bool flag_left = true;
 
 
-//enemy obj[1];
 
-void buildObstacles(block blockObj[7], sf::Texture &Obstaculo)
+void buildobstacles(block blockObj[7], sf::Texture &Obstaculo)
 {
     blockObj[0]= block(70, 475, 500, 70, Obstaculo);
     blockObj[1]= block(640, 475, 200, 70, Obstaculo);
@@ -50,9 +49,70 @@ void buildObstacles(block blockObj[7], sf::Texture &Obstaculo)
 
 }
 
-void buildPoints(){
+void bluidPoints(points pointsObj[44], sf::Texture &Point){
+    //Lado abajo
+    pointsObj[0] = points(20,555, Point);
+    pointsObj[1] = points(120,555, Point);
+    pointsObj[2] = points(220,555, Point);
+    pointsObj[3] = points(320,555, Point);
+    pointsObj[4] = points(550,555, Point);
+    pointsObj[5] = points(650,555, Point);
+    pointsObj[6] = points(750,555, Point);
+    pointsObj[7] = points(850,555, Point);
+
+    //Lado derecho
+    pointsObj[8] = points(860,450, Point);
+    pointsObj[9] = points(860,350, Point);
+    pointsObj[10] = points(860,250, Point);
+    pointsObj[11] = points(860,150, Point);
+    pointsObj[12] = points(860,65, Point);
+
+    //Lado arriba
+    pointsObj[13] = points(760,65, Point);
+    pointsObj[14] = points(660,65, Point);
+    pointsObj[15] = points(560,65, Point);
+    pointsObj[16] = points(460,65, Point);
+    pointsObj[17] = points(360,65, Point);
+    pointsObj[18] = points(260,65, Point);
+    pointsObj[19] = points(160,65, Point);
+    pointsObj[20] = points(60,65, Point);
+
+    //Lado izquierdo
+    pointsObj[21] = points(20,115, Point);
+    pointsObj[22] = points(20,205, Point);
+    pointsObj[23] = points(20,305, Point);
+    pointsObj[24] = points(20,405, Point);
+    pointsObj[25] = points(20,480, Point);
+
+    //Columna derecha
+    pointsObj[26] = points(590,500, Point);
+    pointsObj[27] = points(590,430, Point);
+    pointsObj[28] = points(670,430, Point);
+    pointsObj[29] = points(670,330, Point);
+    pointsObj[30] = points(670,230, Point);
+    pointsObj[31] = points(670,140, Point);
+
+    //Columna derecha izquierda
+    pointsObj[32] = points(500,430, Point);
+    pointsObj[33] = points(500,330, Point);
+    pointsObj[34] = points(500,230, Point);
+    pointsObj[35] = points(500,130, Point);
+
+
+    pointsObj[36] = points(100,430, Point);
+    pointsObj[37] = points(200,430, Point);
+    pointsObj[38] = points(300,430, Point);
+
+    pointsObj[39] = points(100,260, Point);
+    pointsObj[40] = points(200,260, Point);
+    pointsObj[41] = points(300,260, Point);
+    pointsObj[42] = points(320,200, Point);
+    pointsObj[43] = points(320,120, Point);
+
 
 }
+
+
 
 
 int PacMan::game()
@@ -130,17 +190,17 @@ int PacMan::game()
     }
     //create blok array
     block blockObj[7];
-    //build meteor objets
-    buildObstacles(blockObj, Obstaculo);
 
+    //build meteor objets
+    buildobstacles(blockObj, Obstaculo);
 
     sf::Texture Point;
-    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/"))
+    if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Point.png"))
     {
         std::cout << "Error load image";
     }
-    points pointsObj[40];
-    //buildPoints(pointsObj)
+    points pointsObj[44];
+    bluidPoints( pointsObj, Point);
 
     sf::Texture enemyTexture;
     sf::Texture enemyTexture1;
@@ -382,11 +442,16 @@ int PacMan::game()
             }
             window.draw(player1);
 
-            for (int i = 0; i < 33; i++)//draw walls
+            for (int i = 0; i < 7; i++)//draw walls
             {
-                if (blockObj[i].isDestroyed == false)
-                    window.draw(blockObj[i]);
+                window.draw(blockObj[i]);
             }
+            for (int i = 0; i < 44; i++)//draw walls
+            {
+                window.draw(pointsObj[i]);
+            }
+
+
 
             window.draw(scoreText);
 
