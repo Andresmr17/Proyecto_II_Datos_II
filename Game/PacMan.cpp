@@ -15,25 +15,17 @@
 
 using namespace std;
 
-bool leftRight = false;
-bool moveDown = false;
-bool isSpacePressed = false;
-int countEnemyShoot = 0;
-int countEnemyDeadBullets = 0;
-int countShot = 0;
-int countDeadBullets = 0;
-int countDeadEnemy = 0;
+
 int playerLives = 3;
 bool game = true;
-int bullettsStartX = 0;
-int bulletStartMoveUp = 563;
+
 int loop = 1;
-int selectEnemyToShoot = 0;
+
 int enemyLeft = 1;
 bool juego = true;
-bool notShoot = true;
+
 int randomEnemy = 0;
-int countEnemyShootDifference = 0;
+
 
 //enemy obj[1];
 
@@ -44,37 +36,11 @@ void buildShelter(block blockObj[36], sf::Texture &meteor)
     float tempx = 0;
     float tempy = 0;
     int counter = 0;
-    for(int i = 0; i < 12; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            bblockX += 20;
-            if (bblockY == 480 && bblockX == 190 || bblockY == 480 && bblockX == 390 || bblockY == 480 && bblockX == 590)
-            {
-                //Do nothing
-            }
-            else
-            {
-                blockObj[counter] = block(bblockX, bblockY);
-                blockObj[counter].setTexture(&meteor);
-                counter++;
-            }
 
-        }
-        bblockX += 140;
-        if (bblockX == 750)
-        {
-            bblockX = 150;
-            bblockY += 10;
-        }
+        blockObj[counter] = block(70, 70);
+        blockObj[counter].setTexture(&meteor);
 
-        if (bblockX == 0 && bblockY == -50)
-        {
-            bblockX = tempx;
-            bblockY = tempy;
-        }
 
-    }
 }
 
 
@@ -85,9 +51,6 @@ int PacMan::game()
     int score = 0;
     int kill = 1;
     int level = 1;
-    bool levelUp = false;
-    bool playSound = false;
-    int highScoreInt = 0;
     int flyCount = 0;
     int tempScore = 0;
 
@@ -104,7 +67,7 @@ int PacMan::game()
 
     //Fuente del texto
     sf::Font font;
-    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
+    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
     {
         std::cout << "Can't load font";
     }
@@ -134,7 +97,7 @@ int PacMan::game()
     messageTXT.setPosition(sf::Vector2f(320, 250));
     //Arrow up - Down
     sf::Texture upDown;
-    if (!upDown.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/UD.png"))
+    if (!upDown.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/UD.png"))
     {
         std::cout << "Error load image";
     }
@@ -149,8 +112,8 @@ int PacMan::game()
     //enemy en;//static member of enemy class
 
     //create meteor objects
-    sf::Texture meteor;
-    if (!meteor.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png"))
+    sf::Texture Obstaculo;
+    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png"))
     {
         std::cout << "Error load image";
     }
@@ -161,7 +124,7 @@ int PacMan::game()
     float tempx = 0;
     float tempy = 0;
     //build meteor objets
-    buildShelter(blockObj, meteor);
+    buildShelter(blockObj, Obstaculo);
 
     sf::Texture enemyTexture;
     sf::Texture enemyTexture1;
@@ -169,28 +132,6 @@ int PacMan::game()
     {
         std::cout << "Error load image";
     }
-
-    /*
-    //create enemy objects
-    for (int i = 0; i < 1; i++)
-    {
-        x += 40;
-        if (x >= 560)
-        {
-            x = 40;
-            y += 50;
-        }
-        if (i>39)
-            front = true;
-        else
-            front = false;
-        obj[i] = enemy(x, y, front);
-        if (i % 2 == 0)
-            obj[i].setTexture(&enemyTexture);
-        else
-            obj[i].setTexture(&enemyTexture1);
-
-    }*/
 
     //******************************************************************************************
     sf::RenderWindow window(sf::VideoMode(900, 650), "PacManCE");
@@ -200,7 +141,7 @@ int PacMan::game()
     sf::Sprite background;
     sf::Vector2u TextureSize;  //Added to store texture size.
     sf::Vector2u WindowSize;   //Added to store window size.
-    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/fondo.png"))
+    if (!backgroundPic.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/fondo.png"))
     {
         std::cout << "Error load image";
     }
@@ -217,17 +158,32 @@ int PacMan::game()
     }
 
     //sf::RectangleShape player(sf::Vector2f(70, 30));
-    sf::Texture texture;
-    if (!texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Jugador.png"))
+    sf::Texture Up;
+    sf::Texture Down;
+    sf::Texture Right;
+    sf::Texture Left;
+    if (!Up.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Up.png"))
+    {
+        std::cout << "Error load image";
+    }
+    if (!Down.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Down.png"))
+    {
+        std::cout << "Error load image";
+    }
+    if (!Right.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Right.png"))
+    {
+        std::cout << "Error load image";
+    }
+    if (!Left.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Left.png"))
     {
         std::cout << "Error load image";
     }
 
     //player.setTexture(&texture);
-    player player1 = player(0, 560, texture);
-    lives live1 = lives(0, 610, texture);
-    lives live2 = lives(100, 610, texture);
-    lives live3 = lives(200, 610, texture);
+    player player1 = player(420, 548, Right);
+    lives live1 = lives(0, 610, Right);
+    lives live2 = lives(100, 610, Right);
+    lives live3 = lives(200, 610, Right);
 
     // set timepeFrame to 1 60th of a second. 60 frames per second
     sf::Time timePerFrame = sf::seconds(1.0f / 200.0f);
@@ -259,29 +215,45 @@ int PacMan::game()
             // get keyboard input.
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
-                player1.playerX = player1.playerX - player1.playerSpeed;
-                if (player1.playerX <= -30)
-                    player1.playerX = 730;
+                player1.setTexture(&Left);
+                if (player1.playerX <= 2){
+                    player1.playerX = player1.playerX - 0;
+
+                }
+                else{
+                    player1.playerX = player1.playerX - player1.playerSpeed;
+                }
+
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
-                player1.playerX = player1.playerX + player1.playerSpeed;
-                if (player1.playerX > 760)
-                    player1.playerX = 0;
+                player1.setTexture(&Right);
+                if(player1.playerX > 850){
+                    player1.playerX  += 0;
+                }
+                else{
+                    player1.playerX = player1.playerX + player1.playerSpeed;
             }
-            /*
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                player1.playerX = player1.playerX - player1.playerSpeed;
-                if (player1.playerX <= -30)
-                    player1.playerX = 730;
+
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            {
-                player1.playerX = player1.playerX + player1.playerSpeed;
-                if (player1.playerX > 760)
-                    player1.playerX = 0;
-            }*/
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                player1.setTexture(&Up);
+                if (player1.playerY < 52) {
+                    player1.playerY += 0;
+                } else {
+                    player1.playerY = player1.playerY - player1.playerSpeed;
+                }
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                player1.setTexture(&Down);
+                    if (player1.playerY > 548) {
+                        player1.playerY += 0;
+                    } else {
+                        player1.playerY = player1.playerY + player1.playerSpeed;
+                    }
+                }
+
 
 
             // update player position
@@ -296,28 +268,7 @@ int PacMan::game()
 
             window.draw(line, 5, sf::Lines);
 
-            /*
-            for (int i = 0; i < 52; i++)//draw alive enemies
-            {
-                if (obj[i].enemyDeath == false)
-                {
-                    if (loop % 60 == 0)
-                    {
-                        if (i % 2 == 0)
-                            obj[i].setTexture(&enemyTexture);
-                        else
-                            obj[i].setTexture(&enemyTexture1);
-                    }
-                    else if (loop % 30 == 0)
-                    {
-                        if (i % 2 == 0)
-                            obj[i].setTexture(&enemyTexture1);
-                        else
-                            obj[i].setTexture(&enemyTexture);
-                    }
-                    window.draw(obj[i]);
-                }
-            }*/
+
 
             //Muestra las vidas del jugador
             if (playerLives == 3)
@@ -342,37 +293,6 @@ int PacMan::game()
                 if (blockObj[i].isDestroyed == false)
                     window.draw(blockObj[i]);
             }
-
-            /*
-            if (enemyLeft == 0)//all enemy died
-            {
-                if (level >= 5)
-                {
-                    game = false;
-                }
-
-                if (game)
-                {
-
-                    level++;
-                    enemyLeft = 52;
-                    kill = 40 + level * 2;
-
-                    if (playerLives < 3)
-                        playerLives++;
-
-                    en.setClassSpeed(level);
-                    countEnemyShoot = 0;
-                    countEnemyDeadBullets = 0;
-                    countShot = 0;
-                    countDeadBullets = 0;
-                    score += 500;
-                    playerLevel.setString("Level : " + std::to_string(level));
-                    scoreText.setString("Score : " + std::to_string(score));
-                    resetBullets();
-                }
-
-            }*/
 
             window.draw(scoreText);
 
@@ -401,35 +321,6 @@ int PacMan::game()
                 messageTXT.setString("You Won!");
                 window.draw(messageTXT);
                 win = true;
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                win = false;
-                level = 1;
-                kill = 40;
-                if(score>highScoreInt)
-                    highScoreInt = score;
-
-                //	gameWinner = false;
-                //en.setClassSpeed(0.5f);
-
-                score = 0;
-
-                playerLevel.setString("Level : " + std::to_string(level));
-                scoreText.setString("Score : " + std::to_string(score));
-
-                //resetBullets();
-
-
-                //rebuild all meteors
-                buildShelter(blockObj, meteor);
-
-                juego = true;
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            {
                 //exit game
                 window.close();
             }

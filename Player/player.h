@@ -11,4 +11,5 @@ public:
     player();
     ~player();
     player(float x, float y, sf::Texture &texture);
+
 };

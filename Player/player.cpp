@@ -26,10 +26,10 @@ player::~player()
 
 player::player(float x, float y, sf::Texture &texture)
 {
-    playerX = 15;
-    playerY = 300;
-    playerSpeed = 20.0f;
-    setSize(sf::Vector2f(70, 70));
+    playerX = x;
+    playerY = y;
+    playerSpeed = 1.0f;
+    setSize(sf::Vector2f(50, 50));
     setPosition(playerX, playerY);
     setTexture(&texture);
 }
