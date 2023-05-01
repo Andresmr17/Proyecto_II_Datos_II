@@ -159,7 +159,7 @@ int PacMan::game()
 
     sf::Texture enemyTexture;
     sf::Texture enemyTexture1;
-    if (!enemyTexture.loadFromFile("images/fantasma1.png"))
+    if (!enemyTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png"))
     {
         std::cout << "Error load image";
     }
@@ -176,6 +176,9 @@ int PacMan::game()
     {
         std::cout << "Error load image";
     }
+
+
+
     else
     {
         TextureSize = backgroundPic.getSize(); //Get size of texture.
