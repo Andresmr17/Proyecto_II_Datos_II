@@ -49,7 +49,7 @@ void buildobstacles(block blockObj[7], sf::Texture &Obstaculo)
 
 }
 
-void bluidPoints(points pointsObj[44], sf::Texture &Point){
+void bluidPoints(points pointsObj[], sf::Texture &Point){
     //Lado abajo
     pointsObj[0] = points(20,555, Point);
     pointsObj[1] = points(120,555, Point);
@@ -410,6 +410,15 @@ int PacMan::game()
                     }
                 }
                 press_flag = true;
+
+                for(int i = 0; i < 44; i++){
+                    if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
+                        scoreText.setString("Puntuacion : " + std::to_string(score+=10));
+                        pointsObj[i].setPosition(1000,1000);
+
+                    }
+                }
+
             }
 
 
