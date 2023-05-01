@@ -9,12 +9,15 @@ block::~block()
 {
 
 }
-block::block(float x, float y)
+block::block(float pos_x, float pos_y, float largo, float ancho, sf::Texture &texture)
 {
 
-    setSize(sf::Vector2f(70, 70));
-    blockX = x;
-    blockY = y;
+    ancho_block = ancho;
+    largo_block = largo;
+    setSize(sf::Vector2f(largo_block, ancho_block));
+    blockX = pos_x;
+    blockY = pos_y;
     setPosition(blockX, blockY);
     isDestroyed = false;
+    setTexture(&texture);
 }

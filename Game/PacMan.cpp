@@ -29,16 +29,17 @@ int randomEnemy = 0;
 
 //enemy obj[1];
 
-void buildShelter(block blockObj[36], sf::Texture &meteor)
+void buildShelter(block blockObj[33], sf::Texture &Obstaculo)
 {
-    float bblockX = 150;
-    float bblockY = 450;
-    float tempx = 0;
-    float tempy = 0;
-    int counter = 0;
 
-        blockObj[counter] = block(70, 70);
-        blockObj[counter].setTexture(&meteor);
+    blockObj[0]= block(70, 475, 500, 70, Obstaculo);
+    blockObj[1]= block(640, 475, 200, 70, Obstaculo);
+    blockObj[2]= block(720, 105, 120, 370, Obstaculo);
+    blockObj[3]= block(550, 105, 100, 300, Obstaculo);
+    blockObj[4]= block(370, 105, 100, 370, Obstaculo);
+    blockObj[5]= block(70, 310, 300, 100, Obstaculo);
+    blockObj[6]= block(70, 110, 230, 130, Obstaculo);
+
 
 
 }
@@ -231,6 +232,7 @@ int PacMan::game()
                 if(player1.playerX > 850){
                     player1.playerX  += 0;
                 }
+
                 else{
                     player1.playerX = player1.playerX + player1.playerSpeed;
             }
@@ -241,7 +243,11 @@ int PacMan::game()
                 player1.setTexture(&Up);
                 if (player1.playerY < 52) {
                     player1.playerY += 0;
-                } else {
+                }
+                else if(blockObj[0].getGlobalBounds().intersects(player1.getGlobalBounds())){
+                    player1.playerX  += 0;
+                }
+                else {
                     player1.playerY = player1.playerY - player1.playerSpeed;
                 }
             }
