@@ -15,6 +15,6 @@ add_executable(Proyecto_II_Datos_II
         Player/lives.cpp
         block.h
         block.cpp
-        points.h points.cpp)
+        points.h points.cpp ghosts/ghosts.h ghosts/ghosts.cpp)
 
 target_link_libraries(Proyecto_II_Datos_II sfml-graphics sfml-audio sfml-system)

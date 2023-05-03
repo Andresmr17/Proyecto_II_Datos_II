@@ -4,5 +4,5 @@ class PacMan {
 
 public:
 
-    int game();
+    int game(int cantidad_fantasmas,int nivel);
 };
