@@ -2,10 +2,10 @@
 #include <SFML/Audio.hpp>
 
 #include "PacMan.h"
-#include "../block.h"
+#include "../Resorces/block.h"
 #include "../Player/lives.h"
 #include "../Player/player.h"
-#include "../points.h"
+#include "../Resorces/points.h"
 #include "../ghosts/ghosts.h"
 #include <thread>
 #include <iostream>
@@ -20,6 +20,9 @@ int loop = 1;
 bool juego = true;
 int randomEnemy = 0;
 int countDeadEnemy = 0;
+
+int i;
+int d;
 
 bool isDeath = false;
 bool press_flag = true;
@@ -200,6 +203,8 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
         obj[i] = ghosts(x, y, front);
         obj[i].setTexture(&ghostTexture);
     }
+
+    obj[cantidad_fantasmas].move(i,d);
 
     //player.setTexture(&texture);
     player player1 = player(420, 548, Right);

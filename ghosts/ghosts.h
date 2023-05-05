@@ -10,10 +10,11 @@ public:
     float ghostSpeed;
     float ghostX;
     float ghostY;
-    float classSpeed = 0.5f;
+    float speed = 100.0f;
     bool ghostDeath;
     bool isFront;
     bool isFired;
+    sf::Clock clock;
 
     ghosts();
     ~ghosts();
@@ -24,4 +25,5 @@ public:
     float getghostY();
     void increaseClassSpeed(float number);
     float getClassSpeed();
+    void move(int i, float d);
 };
