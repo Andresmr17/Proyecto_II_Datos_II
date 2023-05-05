@@ -37,7 +37,6 @@ ghosts::ghosts(float x, float y, bool isF)
     setPosition(ghostX, ghostY);
     ghostSpeed = getClassSpeed();
     ghostDeath = false;
-
 }
 
 /**
@@ -86,7 +85,7 @@ float ghosts::getghostY()
  */
 void ghosts::increaseClassSpeed(float number)
 {
-    classSpeed += number;
+    speed += number;
 }
 
 /**
@@ -95,5 +94,59 @@ void ghosts::increaseClassSpeed(float number)
  */
 float ghosts::getClassSpeed()
 {
-    return classSpeed;
+    return speed;
+}
+
+
+
+void moveGhost(float deltaTime, sf::RectangleShape obstacle) {
+    sf::Vector2f movement(0.0f, 0.0f);
+    float speed = 100.0f;
+    int direction = rand() % 4;
+    float distance = speed * deltaTime;
+
+    switch (direction) {
+        case 0: // Up
+            movement.y -= distance;
+            break;
+        case 1: // Down
+            movement.y += distance;
+            break;
+        case 2: // Left
+            movement.x -= distance;
+            break;
+        case 3: // Right
+            movement.x += distance;
+            break;
+    }
+}
+
+bool checkCollision(const sf::CircleShape& ghost, const std::vector<sf::RectangleShape>& obstacles, float speed, float deltaTime){
+    bool collided = false;
+
+    for (const auto& obstacle : obstacles)
+    {
+        if (ghost.getGlobalBounds().intersects(obstacle.getGlobalBounds()))
+        {
+            // El fantasma ha chocado con un obstáculo, generar una nueva dirección aleatoria
+            int direction = std::rand() % 4;
+            switch (direction)
+            {
+                case 0:
+                    ghost.move(0, speed * deltaTime); // Mover hacia abajo para evitar el obstáculo
+                    break;
+                case 1:
+                    ghost.move(-speed * deltaTime, 0); // Mover hacia la izquierda para evitar el obstáculo
+                    break;
+                case 2:
+                    ghost.move(0, -speed * deltaTime); // Mover hacia arriba para evitar el obstáculo
+                    break;
+                case 3:
+                    ghost.move(speed * deltaTime, 0); // Mover hacia la derecha para evitar el obstáculo
+                    break;
+            }
+            return true; // Hubo colisión
+        }
+    }
+    return false; // No hubo colisión
 }
