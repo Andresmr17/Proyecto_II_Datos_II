@@ -132,6 +132,7 @@ bool checkCollision(const sf::CircleShape& ghost, const std::vector<sf::Rectangl
             int direction = std::rand() % 4;
             switch (direction)
             {
+                /*
                 case 0:
                     ghost.move(0, speed * deltaTime); // Mover hacia abajo para evitar el obstáculo
                     break;
@@ -144,6 +145,7 @@ bool checkCollision(const sf::CircleShape& ghost, const std::vector<sf::Rectangl
                 case 3:
                     ghost.move(speed * deltaTime, 0); // Mover hacia la derecha para evitar el obstáculo
                     break;
+                    */
             }
             return true; // Hubo colisión
         }

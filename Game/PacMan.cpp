@@ -12,8 +12,9 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
 
+using namespace std;
+bool ghost_move = true;
 
 int playerLives = 3;
 int loop = 1;
@@ -31,7 +32,7 @@ bool flag_down = true;
 bool flag_right = true;
 bool flag_left = true;
 
-
+char direccion = 'd';
 
 void buildobstacles(block blockObj[7], sf::Texture &Obstaculo)
 {
@@ -64,7 +65,7 @@ void bluidPoints(points pointsObj[], sf::Texture &Point){
 }
 
 int PacMan::game(int cantidad_fantasmas, int nivel) {
-    ghosts obj[cantidad_fantasmas];
+    ghosts ghost;
     int ghostLeft = cantidad_fantasmas;
     bool win = false;
     int score = 0;
@@ -85,7 +86,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
 
     //Fuente del texto
     sf::Font font;
-    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
+    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
         std::cout << "Can't load font";
     }
 
@@ -115,7 +116,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
 
     //Arrow up - Down
     sf::Texture upDown;
-    if (!upDown.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
+    if (!upDown.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
         std::cout << "Error load image";
     }
 
@@ -129,7 +130,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
 
     //create obstacles objects
     sf::Texture Obstaculo;
-    if (!Obstaculo.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
+    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
         std::cout << "Error load image";
     }
     //create blok array
@@ -139,7 +140,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
     buildobstacles(blockObj, Obstaculo);
 
     sf::Texture Point;
-    if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
+    if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
     points pointsObj[44];
@@ -149,7 +150,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
     int y = 60;
     bool front = false;
     sf::Texture ghostTexture;
-    if (!ghostTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    if (!ghostTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
 
@@ -161,7 +162,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
     sf::Sprite background;
     sf::Vector2u TextureSize;  //Added to store texture size.
     sf::Vector2u WindowSize;   //Added to store window size.
-    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
+    if (!backgroundPic.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
         std::cout << "Error load image";
     } else {
         TextureSize = backgroundPic.getSize(); //Get size of texture.
@@ -179,32 +180,25 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
     sf::Texture Down;
     sf::Texture Right;
     sf::Texture Left;
-    if (!Up.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
+    if (!Up.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
         std::cout << "Error load image";
     }
-    if (!Down.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
+    if (!Down.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
         std::cout << "Error load image";
     }
-    if (!Right.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
+    if (!Right.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
         std::cout << "Error load image";
     }
-    if (!Left.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
+    if (!Left.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
         std::cout << "Error load image";
     }
 
-    //Crea objetos enemigos
-    for (int i = 0; i < cantidad_fantasmas; i++) {
 
-        y += 60;
-        if (y >= 750) {
-            y = 380;
-            x += 60;
-        }
-        obj[i] = ghosts(x, y, front);
-        obj[i].setTexture(&ghostTexture);
-    }
+    ghost = ghosts(5, 60, front);
+    ghost.setTexture(&ghostTexture);
 
-    obj[cantidad_fantasmas].move(i,d);
+
+    //obj[cantidad_fantasmas].move(i,d);
 
     //player.setTexture(&texture);
     player player1 = player(420, 548, Right);
@@ -253,7 +247,6 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
                                 flag_up = true;
                                 flag_right = true;
                                 flag_down = true;
-
                             }
                         }
                     }
@@ -371,8 +364,57 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
                 }
             }
 
+            //Movimiento del fantasma
+            if (ghost_move){
+                if (loop % 10 == 0 )
+                {
+                    if(ghost.getghostX() > 3 && ghost.getghostX() < 63 && ghost.getghostY() > 240 && ghost.getghostY() < 245){
+                        char dir[2] = {'r', 'd'};
+                        int num = rand()%2;
+                        direccion = dir[0];
+                        cout << num << endl;
+                    }
+                    if(direccion == 'd'){
+                        float sx;
+                        float sy;
+                        sx = ghost.getghostX();
+                        sy = ghost.getghostY() + ghost.speed;
+                        ghost.setghostX(sx);
+                        ghost.setghostY(sy);
+                        ghost.setPosition(sx, sy);
+                        loop++;
+                    }
+                    if(direccion == 'r'){
+                        float sx;
+                        float sy;
+                        sx = ghost.getghostX()+ ghost.speed;;
+                        sy = ghost.getghostY() ;
+                        ghost.setghostX(sx);
+                        ghost.setghostY(sy);
+                        ghost.setPosition(sx, sy);
+                        loop++;
+
+                    }
+                }
+                loop++;
+            }
+
+
+            /*if(sf::Event::MouseButtonPressed){
+                sf::Mouse::getPosition( window );
+                sf::Vector2i mousePos = sf::Mouse::getPosition( window );
+                cout << static_cast<float>( mousePos.x ) << endl;
+                cout << static_cast<float>( mousePos.y ) << endl;
+            }*/
+
+
+
+
+
+
             // update player position
             player1.setPosition(player1.playerX, player1.playerY);
+
             // clear the screen and draw all the shapes
             window.clear();
             window.draw(background);
@@ -384,7 +426,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
             {
                 window.draw(blockObj[i]);
             }
-            for (int i = 0; i < 44; i++)//draw walls
+            for (int i = 0; i < 44; i++)//draw points
             {
                 window.draw(pointsObj[i]);
             }
@@ -393,23 +435,16 @@ int PacMan::game(int cantidad_fantasmas, int nivel) {
 
             window.draw(playerLevel);
 
+            window.draw(ghost);
+
             // reset the timeSinceLastUpdate to 0
             timeSinceLastUpdate = sf::Time::Zero;
-            loop++;
+            
         }
 
-        //Dibuja enemigos vivos
-        for (int i = 0; i < cantidad_fantasmas; i++)
-        {
-            if (obj[i].ghostDeath == false) {
-                if (loop % 60 == 0) {
-                    obj[i].setTexture(&ghostTexture);
-                } else if (loop % 30 == 0) {
-                    obj[i].setTexture(&ghostTexture);
-                }
-                window.draw(obj[i]);
-            }
-        }
+        //Dibuja fantasmas
+
+
 
         /*//Si el enemigo alcanza al jugador
         for (int b = 0; b < cantidad_fantasmas - countDeadEnemy; b++)
