@@ -1,6 +1,6 @@
 #pragma once
 
-class PacMan {
+class PacMan2 {
 
 public:
 

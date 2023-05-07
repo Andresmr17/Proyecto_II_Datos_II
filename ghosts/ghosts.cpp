@@ -99,7 +99,7 @@ float ghosts::getClassSpeed()
 
 
 
-void moveGhost(float deltaTime, sf::RectangleShape obstacle) {
+void ghosts:: moveGhost(float deltaTime) {
     sf::Vector2f movement(0.0f, 0.0f);
     float speed = 100.0f;
     int direction = rand() % 4;
@@ -121,7 +121,7 @@ void moveGhost(float deltaTime, sf::RectangleShape obstacle) {
     }
 }
 
-bool checkCollision(const sf::CircleShape& ghost, const std::vector<sf::RectangleShape>& obstacles, float speed, float deltaTime){
+/*bool checkCollision(const sf::CircleShape& ghost, const std::vector<sf::RectangleShape>& obstacles, float speed, float deltaTime){
     bool collided = false;
 
     for (const auto& obstacle : obstacles)
@@ -134,21 +134,21 @@ bool checkCollision(const sf::CircleShape& ghost, const std::vector<sf::Rectangl
             {
                 /*
                 case 0:
-                    ghost.move(0, speed * deltaTime); // Mover hacia abajo para evitar el obstáculo
+                    ghost.moveGhost(0, speed * deltaTime); // Mover hacia abajo para evitar el obstáculo
                     break;
                 case 1:
-                    ghost.move(-speed * deltaTime, 0); // Mover hacia la izquierda para evitar el obstáculo
+                    ghost.moveGhost(-speed * deltaTime, 0); // Mover hacia la izquierda para evitar el obstáculo
                     break;
                 case 2:
-                    ghost.move(0, -speed * deltaTime); // Mover hacia arriba para evitar el obstáculo
+                    ghost.moveGhost(0, -speed * deltaTime); // Mover hacia arriba para evitar el obstáculo
                     break;
                 case 3:
                     ghost.move(speed * deltaTime, 0); // Mover hacia la derecha para evitar el obstáculo
                     break;
-                    */
+
             }
             return true; // Hubo colisión
         }
     }
     return false; // No hubo colisión
-}
+}*/
