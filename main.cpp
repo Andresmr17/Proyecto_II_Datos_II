@@ -110,6 +110,7 @@ int main()
                     sf::Vector2f mousePosF( static_cast<float>( mousePos.x ), static_cast<float>( mousePos.y ) );
                     if (iniciarImage.getGlobalBounds().contains( mousePosF ) )
                     {
+                        window.close();
                         PacMan pacman;
                         return pacman.game(1,1,0);
                     }

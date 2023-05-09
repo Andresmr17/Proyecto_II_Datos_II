@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include "PacMan2.h"
 #include "PacMan3.h"
+#include "PacMan4.h"
 #include "../Resorces/block.h"
 #include "../Player/lives.h"
 #include "../Player/player.h"
@@ -15,43 +15,46 @@
 
 using namespace std;
 
-int playerLives2 = 3;
-int loop2 = 1;
-bool juego2 = true;
-int randomEnemy2 = 0;
-int countDeadEnemy2 = 0;
 
-float deltaTime2 = 1.0f / 60.0f;
+int playerLives3 = 3;
+int loop3 = 1;
+bool juego3 = true;
+int randomEnemy3 = 0;
+int countDeadEnemy3 = 0;
 
-bool isDeath2 = false;
-bool press_flag2 = true;
-bool flag_up2 = true;
-bool flag_down2 = true;
-bool flag_right2 = true;
-bool flag_left2 = true;
+float deltaTime3 = 1.0f / 60.0f;
+
+bool isDeath3 = false;
+bool press_flag3 = true;
+bool flag_up3 = true;
+bool flag_down3 = true;
+bool flag_right3 = true;
+bool flag_left3 = true;
 
 
 
-void buildobstacles2(block blockObj[7], sf::Texture &Obstaculo)
+void buildobstacles3(block blockObj[7], sf::Texture &Obstaculo)
 {
-    blockObj[0]= block(70, 360, 230, 185, Obstaculo);
-    blockObj[1]= block(610, 360, 230, 185, Obstaculo);
-    blockObj[2]= block(610, 110, 230, 185, Obstaculo);
-    blockObj[3]= block(370, 170, 170, 310, Obstaculo);
-    blockObj[4]= block(70, 110, 230, 185, Obstaculo);
+    blockObj[0]= block(70, 110, 750, 50, Obstaculo);
+    blockObj[1]= block(70, 490, 750, 50, Obstaculo);
+    blockObj[2]= block(70, 110, 50, 180, Obstaculo);
+    blockObj[3]= block(70, 360, 50, 180, Obstaculo);
+    blockObj[4]= block(790, 110, 50, 180, Obstaculo);
+    blockObj[5]= block(790, 360, 50, 180, Obstaculo);
+    blockObj[6]= block(185, 235, 550, 185, Obstaculo);
 
 }
 
-void bluidPoints2(points pointsObj[], sf::Texture &Point){
+void bluidPoints3(points pointsObj[], sf::Texture &Point){
 
     int posiciones_puntos[44][2]={{60,65},{160,65},{260,65},{360, 65},{460, 65},{560,65},
-                                  {660, 65},{760, 65},{860,65},{20,125},{20,205},{20,305},
+                                  {660, 65},{760, 65},{860,65},{20,135},{20,215},{20,315},
                                   {20,405},{20,480},{60,555},{160, 555},{260, 555},{360, 555},
-                                  {860, 555},{560, 555},{660, 555},{760,555},{100, 315},{200, 315},
-                                  {320, 315},{860, 205},{860, 305},{860, 405},{860, 485},{405, 120},
-                                  {660, 315},{780, 315},{560, 125},{560, 205},{560, 305},{315,405},
-                                  {315, 480},{560, 405},{560, 480},{485,120},{405,495},{485, 495},{320,200},
-                                  {320,120}
+                                  {860, 555},{560, 555},{660, 555},{760,555},{80, 315},{135, 315},
+                                  {810, 315},{860, 215},{860, 315},{860, 405},{860, 480},{135, 185},
+                                  {235, 185},{335, 185},{435, 185},{535, 185},{635, 185},{735,185},
+                                  {135, 440},{235, 440},{335, 440},{435,440},{535,440},{635, 440},{735,440},
+                                  {750,315}
     };
 
     for(int i = 0; i < 44; i++){
@@ -60,7 +63,8 @@ void bluidPoints2(points pointsObj[], sf::Texture &Point){
     }
 }
 
-int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
+int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
+
     ghosts obj[cantidad_fantasmas];
     int ghostLeft = cantidad_fantasmas;
     bool win = false;
@@ -133,14 +137,14 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
     block blockObj[7];
 
     //build meteor objets
-    buildobstacles2(blockObj, Obstaculo);
+    buildobstacles3(blockObj, Obstaculo);
 
     sf::Texture Point;
     if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
     points pointsObj[44];
-    bluidPoints2(pointsObj, Point);
+    bluidPoints3(pointsObj, Point);
 
     int x = 850;
     int y = 60;
@@ -232,28 +236,28 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         if (timeSinceLastUpdate > timePerFrame) {
 
             // get keyboard input.
-            if(press_flag2) {
+            if(press_flag3) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                    press_flag2 = false;
+                    press_flag3 = false;
 
 
                     player1.setTexture(&Left);
                     for (int i = 0; i < 7; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
-                            if (flag_right2 && flag_up2 && flag_down2) {
+                            if (flag_right3 && flag_up3 && flag_down3) {
                                 //player1.playerX += 0;
-                                flag_left2 = false;
+                                flag_left3 = false;
                             } else {
-                                flag_left2 = true;
-                                flag_up2 = true;
-                                flag_right2 = true;
-                                flag_down2 = true;
+                                flag_left3 = true;
+                                flag_up3 = true;
+                                flag_right3 = true;
+                                flag_down3 = true;
 
                             }
                         }
                     }
 
-                    if (flag_left2) {
+                    if (flag_left3) {
                         if (player1.playerX <= 2) {
                             player1.playerX = player1.playerX - 0;
                         } else {
@@ -263,28 +267,28 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
 
 
                 }
-                press_flag2 = true;
+                press_flag3 = true;
             }
 
-            if(press_flag2) {
+            if(press_flag3) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                    press_flag2 = false;
+                    press_flag3 = false;
                     player1.setTexture(&Right);
                     for (int i = 0; i < 7; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
-                            if (flag_left2 && flag_up2 && flag_down2) {
+                            if (flag_left3 && flag_up3 && flag_down3) {
                                 //player1.playerX += 0;
-                                flag_right2 = false;
+                                flag_right3 = false;
                             } else {
-                                flag_right2 = true;
-                                flag_up2 = true;
-                                flag_left2 = true;
-                                flag_down2 = true;
+                                flag_right3 = true;
+                                flag_up3 = true;
+                                flag_left3 = true;
+                                flag_down3 = true;
                             }
                         }
                     }
 
-                    if (flag_right2) {
+                    if (flag_right3) {
                         if (player1.playerX > 860) {
                             player1.playerX += 0;
                         } else {
@@ -293,31 +297,31 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                     }
 
                 }
-                press_flag2 = true;
+                press_flag3 = true;
             }
 
-            if(press_flag2) {
+            if(press_flag3) {
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-                    press_flag2 = false;
+                    press_flag3 = false;
                     player1.setTexture(&Up);
                     for (int i = 0; i < 7; i++) {
 
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
 
-                            if (flag_left2 && flag_right2 && flag_down2) {
+                            if (flag_left3 && flag_right3 && flag_down3) {
                                 //player1.playerX += 0;
-                                flag_up2 = false;
+                                flag_up3 = false;
                             } else {
-                                flag_up2 = true;
-                                flag_right2 = true;
-                                flag_left2 = true;
-                                flag_down2 = true;
+                                flag_up3 = true;
+                                flag_right3 = true;
+                                flag_left3 = true;
+                                flag_down3 = true;
                             }
                         }
                     }
 
-                    if (flag_up2) {
+                    if (flag_up3) {
                         if (player1.playerY < 52) {
                             player1.playerY += 0;
                         } else {
@@ -326,28 +330,28 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                     }
 
                 }
-                press_flag2 = true;
+                press_flag3 = true;
             }
 
-            if(press_flag2) {
+            if(press_flag3) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-                    press_flag2 = false;
+                    press_flag3 = false;
                     player1.setTexture(&Down);
                     for (int i = 0; i < 7; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
-                            if (flag_left2 && flag_up2 && flag_right2) {
+                            if (flag_left3 && flag_up3 && flag_right3) {
                                 //player1.playerX += 0;
-                                flag_down2 = false;
+                                flag_down3 = false;
                             } else {
-                                flag_down2 = true;
-                                flag_right2 = true;
-                                flag_up2 = true;
-                                flag_left2 = true;
+                                flag_down3 = true;
+                                flag_right3 = true;
+                                flag_up3 = true;
+                                flag_left3 = true;
                             }
                         }
                     }
 
-                    if (flag_down2) {
+                    if (flag_down3) {
                         if (player1.playerY > 548) {
                             player1.playerY += 0;
                         } else {
@@ -355,7 +359,7 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                         }
                     }
                 }
-                press_flag2 = true;
+                press_flag3 = true;
 
                 for(int i = 0; i < 44; i++){
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
@@ -390,23 +394,23 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
 
             // reset the timeSinceLastUpdate to 0
             timeSinceLastUpdate = sf::Time::Zero;
-            loop2++;
+            loop3++;
         }
 
         //Dibuja enemigos vivos
         for (int i = 0; i < cantidad_fantasmas; i++)
         {
             if (obj[i].ghostDeath == false) {
-                if (loop2 % 60 == 0) {
+                if (loop3 % 60 == 0) {
                     obj[i].setTexture(&ghostTexture);
-                } else if (loop2 % 30 == 0) {
+                } else if (loop3 % 30 == 0) {
                     obj[i].setTexture(&ghostTexture);
                 }
                 window.draw(obj[i]);
             }
         }
 
-        obj[cantidad_fantasmas].moveGhost(deltaTime2);
+        obj[cantidad_fantasmas].moveGhost(deltaTime3);
 
         /*//Si el enemigo alcanza al jugador
         for (int b = 0; b < cantidad_fantasmas - countDeadEnemy; b++)
@@ -421,27 +425,27 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }*/
 
         //Muestra las vidas del jugador
-        if (playerLives2 == 3) {
+        if (playerLives3== 3) {
 
             window.draw(live1);
             window.draw(live2);
             window.draw(live3);
         }
-        else if (playerLives2 == 2) {
+        else if (playerLives3 == 2) {
 
             window.draw(live1);
             window.draw(live2);
         }
-        else if (playerLives2 == 1) {
+        else if (playerLives3 == 1) {
             window.draw(live1);
         }
         window.draw(player1);
 
         //Detecta si la puntuación máxima fue alcanzada
-        if (score == 880) {
-            if (nivel == 2) {
+        if (score == 1320) {
+            if (nivel == 3) {
                 window.close();
-                PacMan3 pacman;
+                PacMan4 pacman;
                 return pacman.game(cantidad_fantasmas + 1, nivel + 1, score);;
             }
         }
@@ -453,7 +457,7 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }*/
 
         //Menu control Exit game or Play again
-        if (juego2 == false) {
+        if (juego3 == false) {
             window.draw(messageTXT);
             window.draw(arrow);
 
@@ -476,3 +480,4 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
 
     return 0;
 }
+
