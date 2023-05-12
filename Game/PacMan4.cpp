@@ -31,8 +31,9 @@ bool flag_left4 = true;
 
 char direccion = 'd';
 
-bool turnPoweron = false;
-bool eaten = false;
+bool turnPoweron4_1 = false;
+bool turnPoweron4_2 = false;
+bool eaten4 = false;
 
 void buildobstacles4(block blockObj[7], sf::Texture &Obstaculo)
 {
@@ -433,22 +434,23 @@ int PacMan4::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }
         window.draw(player1);
 
-        if (score == 200){
-            turnPoweron = true;
-            if (turnPoweron == true){
-                fruit.setPosition(310, 250);
-                window.draw(fruit);
-
-            }
+        if (score == 1400){
+            turnPoweron4_1 = true;
         }
 
-        /*if (score == 1400){
-            turnPoweron = true;
-            if (turnPoweron == true){
-                fruit.setPosition(585, 500);
-                window.draw(fruit);
-            }
-        }*/
+        if (turnPoweron4_1 == true){
+            fruit.setPosition(310, 250);
+            window.draw(fruit);
+        }
+
+        if (score == 1600){
+            turnPoweron4_2 = true;
+        }
+
+        if (turnPoweron4_2 == true){
+            fruit.setPosition(585, 500);
+            window.draw(fruit);
+        }
 
         //Detecta si la puntuación máxima fue alcanzada
         if (score == 1760) {
@@ -457,6 +459,7 @@ int PacMan4::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 window.close();
             }
         }
+
         /*else if(player){
 
         }*/

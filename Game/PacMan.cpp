@@ -3,6 +3,7 @@
 
 #include "PacMan.h"
 #include "PacMan2.h"
+#include "../Resorces/power.h"
 #include "../Resorces/block.h"
 #include "../Player/lives.h"
 #include "../Player/player.h"
@@ -29,6 +30,10 @@ bool flag_up = true;
 bool flag_down = true;
 bool flag_right = true;
 bool flag_left = true;
+
+bool turnPoweron_1 = false;
+bool turnPoweron_2 = false;
+bool eaten = false;
 
 void buildobstacles(block blockObj[7], sf::Texture &Obstaculo)
 {
@@ -187,6 +192,11 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         std::cout << "Error load image";
     }
 
+    sf::Texture powerTexture;
+    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+        std::cout << "Error load image";
+    }
+
     //Crea objetos enemigos
     for (int i = 0; i < cantidad_fantasmas; i++) {
 
@@ -204,6 +214,8 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
     lives live1 = lives(5, 610, Right);
     lives live2 = lives(100, 610, Right);
     lives live3 = lives(200, 610, Right);
+
+    power fruit = power(310, 250, powerTexture);
 
     // set timepeFrame to 1 60th of a second. 60 frames per second
     sf::Time timePerFrame = sf::seconds(1.0f / 200.0f);
@@ -434,6 +446,23 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
             window.draw(live1);
         }
         window.draw(player1);
+
+        if (score == 200){
+            turnPoweron_1 = true;
+        }
+
+        if (turnPoweron_1 == true){
+            fruit.setPosition(10, 65);
+            window.draw(fruit);
+        }
+
+        if (score == 400){
+            turnPoweron_2 = true;
+        }
+        if (turnPoweron_2 == true){
+            fruit.setPosition(845, 790);
+            window.draw(fruit);
+        }
 
         //Detecta si la puntuación máxima fue alcanzada
         if (score == 440) {
