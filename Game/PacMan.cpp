@@ -35,8 +35,22 @@ bool turnPoweron_1 = false;
 bool turnPoweron_2 = false;
 bool eaten = false;
 
-bool ghost_move = true;
+bool ghost_normal_move = true;
+bool ghost_back_move = false;
 char direccion1 = 'd';
+bool flag_1 = true;
+bool flag_2 = true;
+bool flag_3 = true;
+bool flag_4 = true;
+bool flag_5 = true;
+bool flag_6 = true;
+bool flag_7 = true;
+bool flag_8 = true;
+bool flag_9 = true;
+bool flag_10 = true;
+bool flag_11 = true;
+bool flag_12 = true;
+bool flag_13 = true;
 
 void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
 {
@@ -372,6 +386,135 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 }
             }
 
+            if(ghost_back_move){
+                //aqui debe ir el movimiento en backtracking
+            }
+
+            if(ghost_normal_move){
+                if(flag_1){
+                    if(ghost.getghostX() > 848 && ghost.getghostX() < 855 && ghost.getghostY() > 305 && ghost.getghostY() < 310){
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion1 = dir[0];
+                        cout << num << endl;
+                        flag_1 = false;
+                        flag_2 = true;
+                        flag_3 = true;
+                        flag_4 = true;
+                        flag_5 = true;
+                        flag_6 = true;
+                        flag_7 = true;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_2){
+                    if(ghost.getghostX() > 848 && ghost.getghostX() < 855 && ghost.getghostY() > 545 && ghost.getghostY() < 547){
+                        direccion1 = 'u';
+                        flag_1 = true;
+                        flag_2 = false;
+                        flag_3 = true;
+                        flag_4 = true;
+                        flag_5 = true;
+                        flag_6 = true;
+                        flag_7 = true;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_3){
+                    if(ghost.getghostX() > 848 && ghost.getghostX() < 855 && ghost.getghostY() > 63 && ghost.getghostY() < 67){
+                        char dir[2] = {'l', 'd'};
+                        srand(time(NULL));
+                        int num = rand()%2;
+                        direccion1 = dir[1];
+                        flag_1 = true;
+                        flag_2 = true;
+                        flag_3 = false;
+                        flag_4 = true;
+                        flag_5 = true;
+                        flag_6 = true;
+                        flag_7 = true;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_4){
+                    if(ghost.getghostX() > 180 && ghost.getghostX() < 183 && ghost.getghostY() > 63 && ghost.getghostY() < 67) {
+
+                        direccion1 = 'r';
+                        flag_1 = true;
+                        flag_2 = true;
+                        flag_3 = true;
+                        flag_4 = false;
+                        flag_5 = true;
+                        flag_6 = true;
+                        flag_7 = true;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_5){
+                    if(ghost.getghostX() > 10 && ghost.getghostX() < 12 && ghost.getghostY() > 305 && ghost.getghostY() < 310){
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion1 = dir[1];
+                        cout << num << endl;
+                        flag_1 = true;
+                        flag_2 = true;
+                        flag_3 = true;
+                        flag_4 = true;
+                        flag_5 = false;
+                        flag_6 = true;
+                        flag_7 = true;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_6){
+                    if(ghost.getghostX() > 10 && ghost.getghostX() < 12 && ghost.getghostY() > 62 && ghost.getghostY() < 66) {
+
+                        direccion1 = 'd';
+                        flag_1 = true;
+                        flag_2 = true;
+                        flag_3 = true;
+                        flag_4 = true;
+                        flag_5 = true;
+                        flag_6 = false;
+                        flag_7 = true;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_7){
+                    if(ghost.getghostX() > 10 && ghost.getghostX() < 12 && ghost.getghostY() > 542 && ghost.getghostY() < 545) {
+
+                        char dir[2] = {'r', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%2;
+                        direccion1 = dir[0];
+                        flag_1 = true;
+                        flag_2 = true;
+                        flag_3 = true;
+                        flag_4 = true;
+                        flag_5 = true;
+                        flag_6 = true;
+                        flag_7 = false;
+                        flag_8 = true;
+                    }
+                }
+                if(flag_8){
+                    if(ghost.getghostX() > 683 && ghost.getghostX() < 685 && ghost.getghostY() > 542 && ghost.getghostY() < 545){
+                        direccion1 = 'l';
+                        flag_1 = true;
+                        flag_2 = true;
+                        flag_3 = true;
+                        flag_4 = true;
+                        flag_5 = true;
+                        flag_6 = true;
+                        flag_7 = true;
+                        flag_8 = false;
+                    }
+                }
+            }
+
+            //Movimiento del fantasma
             if(direccion1 == 'u'){
                 float sx;
                 float sy;
@@ -408,6 +551,12 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 ghost.setghostX(sx);
                 ghost.setghostY(sy);
                 ghost.setPosition(sx, sy);
+            }
+
+            if(ghost.getGlobalBounds().intersects(player1.getGlobalBounds())){
+                player1.playerX = 100;
+                player1.playerY = 100;
+
             }
 
             // update player position

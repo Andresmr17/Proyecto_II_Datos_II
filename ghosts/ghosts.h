@@ -14,7 +14,7 @@ public:
     float ghostSpeed;
     float ghostX;
     float ghostY;
-    float speed = 0.5f;
+    float speed = 1.0f;
     bool ghostDeath;
     bool isFront;
     bool isFired;
