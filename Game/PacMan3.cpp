@@ -68,10 +68,11 @@ void bluidPoints3(points pointsObj[], sf::Texture &Point){
     }
 }
 
-int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
+int PacMan3::game( int nivel, int puntuacion) {
 
-    ghosts obj[cantidad_fantasmas];
-    int ghostLeft = cantidad_fantasmas;
+    ghosts ghost1;
+    ghosts ghost2;
+    ghosts ghost3;
     bool win = false;
     int score = puntuacion;
     int kill = 1;
@@ -153,6 +154,20 @@ int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
 
     int x = 850;
     int y = 60;
+
+    sf::Texture ghost1Texture;
+    if (!ghost1Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+        std::cout << "Error load image";
+    }
+    sf::Texture ghost2Texture;
+    if (!ghost2Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
+        std::cout << "Error load image";
+    }
+    sf::Texture ghost3Texture;
+    if (!ghost3Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma3.png")) {
+        std::cout << "Error load image";
+    }
+
     bool front = false;
     sf::Texture ghostTexture;
     if (!ghostTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
@@ -204,16 +219,14 @@ int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
     }
 
     //Crea objetos enemigos
-    for (int i = 0; i < cantidad_fantasmas; i++) {
+    ghost1 = ghosts(x, y, front);
+    ghost1.setTexture(&ghost1Texture);
 
-        y += 60;
-        if (y >= 750) {
-            y = 380;
-            x += 60;
-        }
-        obj[i] = ghosts(x, y, front);
-        obj[i].setTexture(&ghostTexture);
-    }
+    ghost2 = ghosts(x, y, front);
+    ghost2.setTexture(&ghost2Texture);
+
+    ghost3 = ghosts(x, y, front);
+    ghost3.setTexture(&ghost2Texture);
 
     //player.setTexture(&texture);
     player player1 = player(420, 548, Right);
@@ -409,20 +422,7 @@ int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
             loop3++;
         }
 
-        //Dibuja enemigos vivos
-        for (int i = 0; i < cantidad_fantasmas; i++)
-        {
-            if (obj[i].ghostDeath == false) {
-                if (loop3 % 60 == 0) {
-                    obj[i].setTexture(&ghostTexture);
-                } else if (loop3 % 30 == 0) {
-                    obj[i].setTexture(&ghostTexture);
-                }
-                window.draw(obj[i]);
-            }
-        }
 
-        obj[cantidad_fantasmas].moveGhost(deltaTime3);
 
         /*//Si el enemigo alcanza al jugador
         for (int b = 0; b < cantidad_fantasmas - countDeadEnemy; b++)
@@ -435,6 +435,10 @@ int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 }
             }
         }*/
+
+        window.draw(ghost1);
+        window.draw(ghost2);
+        window.draw(ghost3);
 
         //Muestra las vidas del jugador
         if (playerLives3== 3) {
@@ -475,7 +479,7 @@ int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
             if (nivel == 3) {
                 window.close();
                 PacMan4 pacman;
-                return pacman.game(cantidad_fantasmas + 1, nivel + 1, score);;
+                return pacman.game(nivel + 1, score);;
             }
         }
         /*else if(playerlives == 0){
@@ -486,22 +490,7 @@ int PacMan3::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }*/
 
         //Menu control Exit game or Play again
-        if (juego3 == false) {
-            window.draw(messageTXT);
-            window.draw(arrow);
 
-            if (ghostLeft > 0) {
-                messageTXT.setString("You Lose!");
-                window.draw(messageTXT);
-                win = true;
-            } else if (win == false) {
-                messageTXT.setString("You Won!");
-                window.draw(messageTXT);
-                win = true;
-                //exit game
-                window.close();
-            }
-        }
 
         window.display();
     }

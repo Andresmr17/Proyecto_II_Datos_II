@@ -35,6 +35,8 @@ bool turnPoweron2_1 = false;
 bool turnPoweron2_2 = false;
 bool eaten2 = false;
 
+char direccion_lvl2[2] = {'d', 'd'};
+
 void buildobstacles2(block blockObj[7], sf::Texture &Obstaculo)
 {
     blockObj[0]= block(70, 360, 230, 185, Obstaculo);
@@ -63,9 +65,8 @@ void bluidPoints2(points pointsObj[], sf::Texture &Point){
     }
 }
 
-int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
-    ghosts obj[cantidad_fantasmas];
-    int ghostLeft = cantidad_fantasmas;
+int PacMan2::game( int nivel, int puntuacion) {
+    ghosts ghost[2];
     bool win = false;
     int score = puntuacion;
     int kill = 1;
@@ -145,14 +146,13 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
     points pointsObj[44];
     bluidPoints2(pointsObj, Point);
 
-    int x = 850;
-    int y = 60;
     bool front = false;
-    sf::Texture ghostTexture[2];
-    if (!ghostTexture[0].loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    sf::Texture ghost1Texture;
+    if (!ghost1Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
-    if (!ghostTexture[1].loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
+    sf::Texture ghost2Texture;
+    if (!ghost2Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
         std::cout << "Error load image";
     }
 
@@ -196,21 +196,16 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
     }
 
     sf::Texture powerTexture;
-    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+    if (!powerTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
         std::cout << "Error load image";
     }
 
     //Crea objetos enemigos
-    for (int i = 0; i < cantidad_fantasmas; i++) {
+    ghost[0] = ghosts(850, 60, front);
+    ghost[0].setTexture(&ghost1Texture);
 
-        y += 60;
-        if (y >= 750) {
-            y = 380;
-            x += 60;
-        }
-        obj[i] = ghosts(x, y, front);
-        obj[i].setTexture(&ghostTexture[i]);
-    }
+    ghost[1] = ghosts(60, 60, front);
+    ghost[1].setTexture(&ghost2Texture);
 
     //player.setTexture(&texture);
     player player1 = player(420, 548, Right);
@@ -378,6 +373,48 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                     }
                 }
             }
+            for(int i = 0; i < 2; i++){
+                if(direccion_lvl2[i] == 'u'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX();
+                    sy = ghost[i].getghostY() - ghost[i].speed;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+
+                if(direccion_lvl2[i] == 'd'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX();
+                    sy = ghost[i].getghostY() + ghost[i].speed;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+                if(direccion_lvl2[i] == 'r'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX()+ ghost[i].speed;;
+                    sy = ghost[i].getghostY() ;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+                if(direccion_lvl2[i] == 'l'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX() - ghost[i].speed;;
+                    sy = ghost[i].getghostY() ;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+            }
+
+
+
 
             // update player position
             player1.setPosition(player1.playerX, player1.playerY);
@@ -407,19 +444,7 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }
 
         //Dibuja enemigos vivos
-        for (int i = 0; i < cantidad_fantasmas; i++)
-        {
-            if (obj[i].ghostDeath == false) {
-                if (loop2 % 60 == 0) {
-                    obj[i].setTexture(&ghostTexture[i]);
-                } else if (loop2 % 30 == 0) {
-                    obj[i].setTexture(&ghostTexture[i]);
-                }
-                window.draw(obj[i]);
-            }
-        }
 
-        obj[cantidad_fantasmas].moveGhost(deltaTime2);
 
         /*//Si el enemigo alcanza al jugador
         for (int b = 0; b < cantidad_fantasmas - countDeadEnemy; b++)
@@ -432,6 +457,9 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 }
             }
         }*/
+
+        window.draw(ghost[0]);
+        window.draw(ghost[1]);
 
         //Muestra las vidas del jugador
         if (playerLives2 == 3) {
@@ -472,7 +500,7 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
             if (nivel == 2) {
                 window.close();
                 PacMan3 pacman;
-                return pacman.game(cantidad_fantasmas + 1, nivel + 1, score);;
+                return pacman.game( nivel + 1, score);;
             }
         }
         /*else if(playerlives == 0){
@@ -483,22 +511,8 @@ int PacMan2::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }*/
 
         //Menu control Exit game or Play again
-        if (juego2 == false) {
-            window.draw(messageTXT);
-            window.draw(arrow);
 
-            if (ghostLeft > 0) {
-                messageTXT.setString("You Lose!");
-                window.draw(messageTXT);
-                win = true;
-            } else if (win == false) {
-                messageTXT.setString("You Won!");
-                window.draw(messageTXT);
-                win = true;
-                //exit game
-                window.close();
-            }
-        }
+
 
         window.display();
     }

@@ -29,7 +29,7 @@ bool flag_down4 = true;
 bool flag_right4 = true;
 bool flag_left4 = true;
 
-char direccion = 'd';
+char direccion_lvl4 = 'd';
 
 bool turnPoweron4_1 = false;
 bool turnPoweron4_2 = false;
@@ -60,9 +60,9 @@ void bluidPoints4(points pointsObj[], sf::Texture &Point){
     }
 }
 
-int PacMan4::game(int cantidad_fantasmas, int nivel, int puntuacion) {
+int PacMan4::game(int nivel, int puntuacion) {
     ghosts ghost;
-    int ghostLeft = cantidad_fantasmas;
+
     bool win = false;
     int score = puntuacion;
     int kill = 1;
@@ -340,10 +340,10 @@ int PacMan4::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                     if(ghost.getghostX() > 3 && ghost.getghostX() < 63 && ghost.getghostY() > 240 && ghost.getghostY() < 245){
                         char dir[2] = {'r', 'd'};
                         int num = rand()%2;
-                        direccion = dir[0];
+                        direccion_lvl4 = dir[0];
                         cout << num << endl;
                     }
-                    if(direccion == 'd'){
+                    if(direccion_lvl4 == 'd'){
                         float sx;
                         float sy;
                         sx = ghost.getghostX();
@@ -353,7 +353,7 @@ int PacMan4::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                         ghost.setPosition(sx, sy);
                         loop4++;
                     }
-                    if(direccion == 'r'){
+                    if(direccion_lvl4 == 'r'){
                         float sx;
                         float sy;
                         sx = ghost.getghostX()+ ghost.speed;;
@@ -465,21 +465,7 @@ int PacMan4::game(int cantidad_fantasmas, int nivel, int puntuacion) {
         }*/
 
         //Menu control Exit game or Play again
-        if (juego4 == false) {
-            window.draw(messageTXT);
-            window.draw(arrow);
-            if (ghostLeft > 0) {
-                messageTXT.setString("You Lose!");
-                window.draw(messageTXT);
-                win = true;
-            } else if (win == false) {
-                messageTXT.setString("You Won!");
-                window.draw(messageTXT);
-                win = true;
-                //exit game
-                window.close();
-            }
-        }
+
         window.display();
     }
     return 0;

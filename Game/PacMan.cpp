@@ -37,7 +37,7 @@ bool eaten = false;
 
 bool ghost_normal_move = true;
 bool ghost_back_move = false;
-char direccion1 = 'd';
+char direccion_lvl1 = 'd';
 bool flag_1 = true;
 bool flag_2 = true;
 bool flag_3 = true;
@@ -77,10 +77,9 @@ void bluidPoints(points pointsObj[], sf::Texture &Point){
     }
 }
 
-int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
+int PacMan::game( int nivel, int puntuacion) {
 
     ghosts ghost;
-    int ghostLeft = cantidad_fantasmas;
     bool win = false;
     int score = puntuacion;
     int kill = 1;
@@ -396,7 +395,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                         char dir[3] = {'l', 'd', 'u'};
                         srand(time(NULL));
                         int num = rand()%3;
-                        direccion1 = dir[0];
+                        direccion_lvl1 = dir[0];
                         cout << num << endl;
                         flag_1 = false;
                         flag_2 = true;
@@ -410,7 +409,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 }
                 if(flag_2){
                     if(ghost.getghostX() > 848 && ghost.getghostX() < 855 && ghost.getghostY() > 545 && ghost.getghostY() < 547){
-                        direccion1 = 'u';
+                        direccion_lvl1 = 'u';
                         flag_1 = true;
                         flag_2 = false;
                         flag_3 = true;
@@ -426,7 +425,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                         char dir[2] = {'l', 'd'};
                         srand(time(NULL));
                         int num = rand()%2;
-                        direccion1 = dir[1];
+                        direccion_lvl1 = dir[1];
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = false;
@@ -440,7 +439,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 if(flag_4){
                     if(ghost.getghostX() > 180 && ghost.getghostX() < 183 && ghost.getghostY() > 63 && ghost.getghostY() < 67) {
 
-                        direccion1 = 'r';
+                        direccion_lvl1 = 'r';
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = true;
@@ -456,7 +455,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                         char dir[3] = {'r', 'd', 'u'};
                         srand(time(NULL));
                         int num = rand()%3;
-                        direccion1 = dir[1];
+                        direccion_lvl1 = dir[1];
                         cout << num << endl;
                         flag_1 = true;
                         flag_2 = true;
@@ -471,7 +470,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 if(flag_6){
                     if(ghost.getghostX() > 10 && ghost.getghostX() < 12 && ghost.getghostY() > 62 && ghost.getghostY() < 66) {
 
-                        direccion1 = 'd';
+                        direccion_lvl1 = 'd';
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = true;
@@ -488,7 +487,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                         char dir[2] = {'r', 'u'};
                         srand(time(NULL));
                         int num = rand()%2;
-                        direccion1 = dir[0];
+                        direccion_lvl1 = dir[0];
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = true;
@@ -501,7 +500,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 }
                 if(flag_8){
                     if(ghost.getghostX() > 683 && ghost.getghostX() < 685 && ghost.getghostY() > 542 && ghost.getghostY() < 545){
-                        direccion1 = 'l';
+                        direccion_lvl1 = 'l';
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = true;
@@ -515,7 +514,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
             }
 
             //Movimiento del fantasma
-            if(direccion1 == 'u'){
+            if(direccion_lvl1 == 'u'){
                 float sx;
                 float sy;
                 sx = ghost.getghostX();
@@ -525,7 +524,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 ghost.setPosition(sx, sy);
             }
 
-            if(direccion1 == 'd'){
+            if(direccion_lvl1 == 'd'){
                 float sx;
                 float sy;
                 sx = ghost.getghostX();
@@ -534,7 +533,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 ghost.setghostY(sy);
                 ghost.setPosition(sx, sy);
             }
-            if(direccion1 == 'r'){
+            if(direccion_lvl1 == 'r'){
                 float sx;
                 float sy;
                 sx = ghost.getghostX()+ ghost.speed;;
@@ -543,7 +542,7 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
                 ghost.setghostY(sy);
                 ghost.setPosition(sx, sy);
             }
-            if(direccion1 == 'l'){
+            if(direccion_lvl1 == 'l'){
                 float sx;
                 float sy;
                 sx = ghost.getghostX() - ghost.speed;;
@@ -628,27 +627,10 @@ int PacMan::game(int cantidad_fantasmas, int nivel, int puntuacion) {
             if (nivel == 1) {
                 window.close();
                 PacMan2 pacman;
-                return pacman.game(cantidad_fantasmas +1, nivel + 1, score);;
+                return pacman.game(nivel + 1, score);;
             }
         }
 
-        //Menu control Exit game or Play again
-        if (juego == false) {
-            window.draw(messageTXT);
-            window.draw(arrow);
-
-            if (ghostLeft > 0) {
-                messageTXT.setString("You Lose!");
-                window.draw(messageTXT);
-                win = true;
-            } else if (win == false) {
-                messageTXT.setString("You Won!");
-                window.draw(messageTXT);
-                win = true;
-                //exit game
-                window.close();
-            }
-        }
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             sf::Vector2i mousePos = sf::Mouse::getPosition( window );
