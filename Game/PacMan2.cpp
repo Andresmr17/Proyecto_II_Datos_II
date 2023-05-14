@@ -24,6 +24,7 @@ int countDeadEnemy2 = 0;
 
 float deltaTime2 = 1.0f / 60.0f;
 
+bool ghost_normal_move_lvl2 = true;
 bool isDeath2 = false;
 bool press_flag2 = true;
 bool flag_up2 = true;
@@ -35,31 +36,44 @@ bool turnPoweron2_1 = false;
 bool turnPoweron2_2 = false;
 bool eaten2 = false;
 
+bool ghost1_flag1 = true;
+bool ghost1_flag2 = true;
+bool ghost1_flag3 = true;
+bool ghost1_flag4 = true;
+
+bool ghost2_flag1 = true;
+bool ghost2_flag2 = true;
+bool ghost2_flag3 = true;
+bool ghost2_flag4 = true;
+
 char direccion_lvl2[2] = {'d', 'd'};
 
-void buildobstacles2(block blockObj[7], sf::Texture &Obstaculo)
+void buildobstacles2(block blockObj[6], sf::Texture &Obstaculo)
 {
-    blockObj[0]= block(70, 360, 230, 185, Obstaculo);
-    blockObj[1]= block(610, 360, 230, 185, Obstaculo);
-    blockObj[2]= block(610, 110, 230, 185, Obstaculo);
-    blockObj[3]= block(370, 170, 170, 310, Obstaculo);
-    blockObj[4]= block(70, 110, 230, 185, Obstaculo);
+    blockObj[0]= block(70, 367, 230, 230, Obstaculo);
+    blockObj[1]= block(610, 372, 230, 225, Obstaculo);
+    blockObj[2]= block(610, 50, 230, 240, Obstaculo);
+    blockObj[3]= block(370, 50, 170, 240, Obstaculo);
+    blockObj[4]= block(70, 50, 230, 240, Obstaculo);
+    blockObj[5]= block(370, 370, 170, 225, Obstaculo);
 
 }
 
 void bluidPoints2(points pointsObj[], sf::Texture &Point){
 
-    int posiciones_puntos[44][2]={{60,65},{160,65},{260,65},{360, 65},{460, 65},{560,65},
-                                  {660, 65},{760, 65},{860,65},{20,125},{20,205},{20,305},
-                                  {20,405},{20,480},{60,555},{160, 555},{260, 555},{360, 555},
-                                  {860, 555},{560, 555},{660, 555},{760,555},{100, 315},{200, 315},
-                                  {320, 315},{860, 205},{860, 305},{860, 405},{860, 485},{405, 120},
-                                  {660, 315},{780, 315},{560, 125},{560, 205},{560, 305},{315,405},
-                                  {315, 480},{560, 405},{560, 480},{485,120},{405,495},{485, 495},{320,200},
-                                  {320,120}
+    int posiciones_puntos[32][2]={
+                                  {20,125},{20,205},{20,305},
+                                  {20,405},{20,480},{100, 315},{200, 315},
+                                  {320, 315},{860, 225},{860, 305},{860, 405},
+                                  {860, 485},{660, 315},{780, 315},{560, 125},
+                                  {560, 205},{560, 305},{315,405},{315, 480},
+                                  {560, 405},{560, 480},{320,200},{320,120},
+                                  {23, 549}, {322, 555}, {562, 558}, {862, 565},
+                                  {324, 70}, {860, 155}, {561, 67}, {860, 90}
+
     };
 
-    for(int i = 0; i < 44; i++){
+    for(int i = 0; i < 31; i++){
         pointsObj[i] = points(posiciones_puntos[i][0],posiciones_puntos[i][1], Point);
 
     }
@@ -201,14 +215,14 @@ int PacMan2::game( int nivel, int puntuacion) {
     }
 
     //Crea objetos enemigos
-    ghost[0] = ghosts(850, 60, front);
-    ghost[0].setTexture(&ghost1Texture);
+    ghost[1] = ghosts(857, 60, front);
+    ghost[1].setTexture(&ghost1Texture);
 
-    ghost[1] = ghosts(60, 60, front);
-    ghost[1].setTexture(&ghost2Texture);
+    ghost[0] = ghosts(10, 120, front);
+    ghost[0].setTexture(&ghost2Texture);
 
     //player.setTexture(&texture);
-    player player1 = player(420, 548, Right);
+    player player1 = player(447, 300, Right);
     lives live1 = lives(5, 610, Right);
     lives live2 = lives(100, 610, Right);
     lives live3 = lives(200, 610, Right);
@@ -373,6 +387,259 @@ int PacMan2::game( int nivel, int puntuacion) {
                     }
                 }
             }
+
+            //Movimiento del fantasma rosado
+            if(ghost_normal_move_lvl2){
+                    if(ghost1_flag1){
+                        if(ghost[0].getghostX() > 8 && ghost[0].getghostX() < 12 && ghost[0].getghostY() > 306 && ghost[0].getghostY() < 310 )//1
+                        {
+                            char dir[3] = {'r', 'd', 'u'};
+                            srand(time(NULL));
+                            int num = rand()%3;
+                            direccion_lvl2[0] = dir[num];
+                            cout << num << endl;
+                            ghost1_flag1 = false;
+                            ghost1_flag2 = true;
+                            ghost1_flag3 = true;
+                            ghost1_flag4 = true;
+                        }
+                    }
+                    if(ghost[0].getghostX() > 8 && ghost[0].getghostX() < 12 && ghost[0].getghostY() > 550 && ghost[0].getghostY() < 595)//2
+                    {
+                        direccion_lvl2[0] = 'u';
+                        ghost1_flag1 = true;
+                        ghost1_flag2 = true;
+                        ghost1_flag3 = true;
+                        ghost1_flag4 = true;
+                    }
+                    if(ghost[0].getghostX() > 8 && ghost[0].getghostX() < 12 && ghost[0].getghostY() > 60 && ghost[0].getghostY() < 65)//3
+                    {
+                        direccion_lvl2[0] = 'd';
+                        ghost1_flag1 = true;
+                        ghost1_flag2 = true;
+                        ghost1_flag3 = true;
+                        ghost1_flag4 = true;
+                    }
+                if(ghost1_flag2){
+                    if(ghost[0].getghostX() > 315 && ghost[0].getghostX() < 320 && ghost[0].getghostY() > 306 && ghost[0].getghostY() < 310 )//4
+                    {
+                        char dir[4] = {'r', 'd', 'u', 'l'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl2[0] = dir[num];
+                        cout << num << endl;
+                        ghost1_flag1 = true;
+                        ghost1_flag2 = false;
+                        ghost1_flag3 = true;
+                        ghost1_flag4 = true;
+                    }}
+
+                if(ghost[0].getghostX() > 315 && ghost[0].getghostX() < 320 && ghost[0].getghostY() > 550 && ghost[0].getghostY() < 595)//5
+                {
+                    direccion_lvl2[0] = 'u';
+                    ghost1_flag1 = true;
+                    ghost1_flag2 = true;
+                    ghost1_flag3 = true;
+                    ghost1_flag4 = true;
+                }
+                if(ghost[0].getghostX() > 315 && ghost[0].getghostX() < 320 && ghost[0].getghostY() > 60 && ghost[0].getghostY() < 65)//6
+                {
+                    direccion_lvl2[0] = 'd';
+                    ghost1_flag1 = true;
+                    ghost1_flag2 = true;
+                    ghost1_flag3 = true;
+                    ghost1_flag4 = true;
+                }
+                if(ghost1_flag3){
+                    if(ghost[0].getghostX() > 554 && ghost[0].getghostX() < 560 && ghost[0].getghostY() > 306 && ghost[0].getghostY() < 310 )//7
+                    {
+                        char dir[4] = {'r', 'd', 'u', 'l'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl2[0] = dir[num];
+                        cout << num << endl;
+                        ghost1_flag1 = true;
+                        ghost1_flag2 = true;
+                        ghost1_flag3 = false;
+                        ghost1_flag4 = true;
+                    }
+                }
+                if(ghost[0].getghostX() > 554 && ghost[0].getghostX() < 560 && ghost[0].getghostY() > 550 && ghost[0].getghostY() < 595)//8
+                {
+                    direccion_lvl2[0] = 'u';
+                    ghost1_flag1 = true;
+                    ghost1_flag2 = true;
+                    ghost1_flag3 = true;
+                    ghost1_flag4 = true;
+                }
+                if(ghost[0].getghostX() > 554 && ghost[0].getghostX() < 560 && ghost[0].getghostY() > 60 && ghost[0].getghostY() < 65)//9
+                {
+                    direccion_lvl2[0] = 'd';
+                    ghost1_flag1 = true;
+                    ghost1_flag2 = true;
+                    ghost1_flag3 = true;
+                    ghost1_flag4 = true;
+                }
+                if(ghost1_flag4){
+                    if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 860 && ghost[0].getghostY() > 306 && ghost[0].getghostY() < 310 )//10
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl2[0] = dir[num];
+                        cout << num << endl;
+                        ghost1_flag1 = true;
+                        ghost1_flag2 = true;
+                        ghost1_flag3 = true;
+                        ghost1_flag4 = false;
+                    }
+                }
+                if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 860 && ghost[0].getghostY() > 550 && ghost[0].getghostY() < 595)//11
+                {
+                    direccion_lvl2[0] = 'u';
+                    ghost1_flag1 = true;
+                    ghost1_flag2 = true;
+                    ghost1_flag3 = true;
+                    ghost1_flag4 = true;
+                }
+                if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 860 && ghost[0].getghostY() > 60 && ghost[0].getghostY() < 65)//12
+                {
+                    direccion_lvl2[0] = 'd';
+                    ghost1_flag1 = true;
+                    ghost1_flag2 = true;
+                    ghost1_flag3 = true;
+                    ghost1_flag4 = true;
+                }
+
+                //Movimiento del fantasma naranja
+
+                if(ghost2_flag1){
+                    if(ghost[1].getghostX() > 8 && ghost[1].getghostX() < 12 && ghost[1].getghostY() > 306 && ghost[1].getghostY() < 310 )//1
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl2[1] = dir[num];
+                        cout << num << endl;
+                        ghost2_flag1 = false;
+                        ghost2_flag2 = true;
+                        ghost2_flag3 = true;
+                        ghost2_flag4 = true;
+                    }
+                }
+                if(ghost[1].getghostX() > 8 && ghost[1].getghostX() < 12 && ghost[1].getghostY() > 550 && ghost[1].getghostY() < 595)//2
+                {
+                    direccion_lvl2[1] = 'u';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost[1].getghostX() > 8 && ghost[1].getghostX() < 12 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//3
+                {
+                    direccion_lvl2[1] = 'd';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost2_flag2){
+                    if(ghost[1].getghostX() > 315 && ghost[1].getghostX() < 320 && ghost[1].getghostY() > 306 && ghost[1].getghostY() < 310 )//4
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl2[1] = dir[num];
+                        cout << num << endl;
+                        ghost2_flag1 = true;
+                        ghost2_flag2 = false;
+                        ghost2_flag3 = true;
+                        ghost2_flag4 = true;
+                    }}
+
+                if(ghost[1].getghostX() > 315 && ghost[1].getghostX() < 320 && ghost[1].getghostY() > 550 && ghost[1].getghostY() < 595)//5
+                {
+                    direccion_lvl2[1] = 'u';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost[1].getghostX() > 315 && ghost[1].getghostX() < 320 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//6
+                {
+                    direccion_lvl2[0] = 'd';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost2_flag3){
+                    if(ghost[1].getghostX() > 554 && ghost[1].getghostX() < 560 && ghost[1].getghostY() > 306 && ghost[1].getghostY() < 310 )//7
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl2[1] = dir[num];
+                        cout << num << endl;
+                        ghost2_flag1 = true;
+                        ghost2_flag2 = true;
+                        ghost2_flag3 = false;
+                        ghost2_flag4 = true;
+                    }
+                }
+                if(ghost[1].getghostX() > 554 && ghost[1].getghostX() < 560 && ghost[1].getghostY() > 550 && ghost[1].getghostY() < 595)//8
+                {
+                    direccion_lvl2[1] = 'u';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost[1].getghostX() > 554 && ghost[1].getghostX() < 560 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//9
+                {
+                    direccion_lvl2[0] = 'd';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost2_flag4){
+                    if(ghost[1].getghostX() > 850 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 306 && ghost[1].getghostY() < 310 )//10
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl2[0] = dir[0];
+                        cout << num << endl;
+                        ghost2_flag1 = true;
+                        ghost2_flag2 = true;
+                        ghost2_flag3 = true;
+                        ghost2_flag4 = false;
+                    }
+                }
+                if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 550 && ghost[1].getghostY() < 595)//11
+                {
+                    direccion_lvl2[0] = 'u';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+                if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//12
+                {
+                    direccion_lvl2[1] = 'd';
+                    ghost2_flag1 = true;
+                    ghost2_flag2 = true;
+                    ghost2_flag3 = true;
+                    ghost2_flag4 = true;
+                }
+
+
+
+
+
+            }
+
             for(int i = 0; i < 2; i++){
                 if(direccion_lvl2[i] == 'u'){
                     float sx;
@@ -396,7 +663,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                 if(direccion_lvl2[i] == 'r'){
                     float sx;
                     float sy;
-                    sx = ghost[i].getghostX()+ ghost[i].speed;;
+                    sx = ghost[i].getghostX() + ghost[i].speed;;
                     sy = ghost[i].getghostY() ;
                     ghost[i].setghostX(sx);
                     ghost[i].setghostY(sy);
@@ -503,6 +770,13 @@ int PacMan2::game( int nivel, int puntuacion) {
                 return pacman.game( nivel + 1, score);;
             }
         }
+
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            sf::Vector2i mousePos = sf::Mouse::getPosition( window );
+            cout << "x" << static_cast<float>( mousePos.x ) << endl;
+            cout << "y" << static_cast<float>( mousePos.y ) << endl;
+        }
+
         /*else if(playerlives == 0){
 
         window.close();

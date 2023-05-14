@@ -35,7 +35,7 @@ bool turnPoweron_1 = false;
 bool turnPoweron_2 = false;
 bool eaten = false;
 
-bool ghost_normal_move = true;
+bool ghost_normal_move_lvl1 = true;
 bool ghost_back_move = false;
 char direccion_lvl1 = 'd';
 bool flag_1 = true;
@@ -46,11 +46,7 @@ bool flag_5 = true;
 bool flag_6 = true;
 bool flag_7 = true;
 bool flag_8 = true;
-bool flag_9 = true;
-bool flag_10 = true;
-bool flag_11 = true;
-bool flag_12 = true;
-bool flag_13 = true;
+
 
 void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
 {
@@ -376,7 +372,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 }
                 press_flag = true;
 
-                for(int i = 0; i < 44; i++){
+                for(int i = 0; i < 31; i++){
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
@@ -389,7 +385,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 //aqui debe ir el movimiento en backtracking
             }
 
-            if(ghost_normal_move){
+            if(ghost_normal_move_lvl1){
                 if(flag_1){
                     if(ghost.getghostX() > 848 && ghost.getghostX() < 855 && ghost.getghostY() > 305 && ghost.getghostY() < 310){
                         char dir[3] = {'l', 'd', 'u'};
