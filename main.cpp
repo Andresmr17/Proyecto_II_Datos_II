@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "Game/PacMan2.h"
+#include "Game/PacMan3.h"
 #include <iostream>
 
 using namespace std;
@@ -111,7 +111,7 @@ int main()
                     if (iniciarImage.getGlobalBounds().contains( mousePosF ) )
                     {
                         window.close();
-                        PacMan2 pacman;
+                        PacMan3 pacman;
                         return pacman.game(1,0);
                     }
                     if (salirImage.getGlobalBounds().contains( mousePosF ) )

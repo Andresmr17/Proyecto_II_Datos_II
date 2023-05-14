@@ -214,7 +214,7 @@ int PacMan3::game( int nivel, int puntuacion) {
     }
 
     sf::Texture powerTexture;
-    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+    if (!powerTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
         std::cout << "Error load image";
     }
 
@@ -222,11 +222,11 @@ int PacMan3::game( int nivel, int puntuacion) {
     ghost1 = ghosts(x, y, front);
     ghost1.setTexture(&ghost1Texture);
 
-    ghost2 = ghosts(x, y, front);
+    ghost2 = ghosts(x, 160, front);
     ghost2.setTexture(&ghost2Texture);
 
-    ghost3 = ghosts(x, y, front);
-    ghost3.setTexture(&ghost2Texture);
+    ghost3 = ghosts(x, 260, front);
+    ghost3.setTexture(&ghost3Texture);
 
     //player.setTexture(&texture);
     player player1 = player(420, 548, Right);

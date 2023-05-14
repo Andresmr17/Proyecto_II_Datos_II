@@ -391,7 +391,7 @@ int PacMan::game( int nivel, int puntuacion) {
                         char dir[3] = {'l', 'd', 'u'};
                         srand(time(NULL));
                         int num = rand()%3;
-                        direccion_lvl1 = dir[0];
+                        direccion_lvl1 = dir[num];
                         cout << num << endl;
                         flag_1 = false;
                         flag_2 = true;
@@ -421,7 +421,7 @@ int PacMan::game( int nivel, int puntuacion) {
                         char dir[2] = {'l', 'd'};
                         srand(time(NULL));
                         int num = rand()%2;
-                        direccion_lvl1 = dir[1];
+                        direccion_lvl1 = dir[num];
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = false;
@@ -451,7 +451,7 @@ int PacMan::game( int nivel, int puntuacion) {
                         char dir[3] = {'r', 'd', 'u'};
                         srand(time(NULL));
                         int num = rand()%3;
-                        direccion_lvl1 = dir[1];
+                        direccion_lvl1 = dir[num];
                         cout << num << endl;
                         flag_1 = true;
                         flag_2 = true;
@@ -483,7 +483,7 @@ int PacMan::game( int nivel, int puntuacion) {
                         char dir[2] = {'r', 'u'};
                         srand(time(NULL));
                         int num = rand()%2;
-                        direccion_lvl1 = dir[0];
+                        direccion_lvl1 = dir[num];
                         flag_1 = true;
                         flag_2 = true;
                         flag_3 = true;
@@ -551,7 +551,6 @@ int PacMan::game( int nivel, int puntuacion) {
             if(ghost.getGlobalBounds().intersects(player1.getGlobalBounds())){
                 player1.playerX = 100;
                 player1.playerY = 100;
-
             }
 
             // update player position

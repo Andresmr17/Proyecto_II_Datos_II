@@ -215,7 +215,7 @@ int PacMan2::game( int nivel, int puntuacion) {
     }
 
     //Crea objetos enemigos
-    ghost[1] = ghosts(857, 60, front);
+    ghost[1] = ghosts(10, 220, front);
     ghost[1].setTexture(&ghost1Texture);
 
     ghost[0] = ghosts(10, 120, front);
@@ -494,7 +494,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                         ghost1_flag4 = false;
                     }
                 }
-                if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 860 && ghost[0].getghostY() > 550 && ghost[0].getghostY() < 595)//11
+                if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 860 && ghost[0].getghostY() > 550 && ghost[0].getghostY() < 560)//11
                 {
                     direccion_lvl2[0] = 'u';
                     ghost1_flag1 = true;
@@ -555,7 +555,8 @@ int PacMan2::game( int nivel, int puntuacion) {
                         ghost2_flag2 = false;
                         ghost2_flag3 = true;
                         ghost2_flag4 = true;
-                    }}
+                    }
+                }
 
                 if(ghost[1].getghostX() > 315 && ghost[1].getghostX() < 320 && ghost[1].getghostY() > 550 && ghost[1].getghostY() < 595)//5
                 {
@@ -567,7 +568,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                 }
                 if(ghost[1].getghostX() > 315 && ghost[1].getghostX() < 320 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//6
                 {
-                    direccion_lvl2[0] = 'd';
+                    direccion_lvl2[1] = 'd';
                     ghost2_flag1 = true;
                     ghost2_flag2 = true;
                     ghost2_flag3 = true;
@@ -597,7 +598,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                 }
                 if(ghost[1].getghostX() > 554 && ghost[1].getghostX() < 560 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//9
                 {
-                    direccion_lvl2[0] = 'd';
+                    direccion_lvl2[1] = 'd';
                     ghost2_flag1 = true;
                     ghost2_flag2 = true;
                     ghost2_flag3 = true;
@@ -609,7 +610,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                         char dir[3] = {'l', 'd', 'u'};
                         srand(time(NULL));
                         int num = rand()%3;
-                        direccion_lvl2[0] = dir[0];
+                        direccion_lvl2[1] = dir[num];
                         cout << num << endl;
                         ghost2_flag1 = true;
                         ghost2_flag2 = true;
@@ -617,15 +618,16 @@ int PacMan2::game( int nivel, int puntuacion) {
                         ghost2_flag4 = false;
                     }
                 }
-                if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 550 && ghost[1].getghostY() < 595)//11
+                if(ghost[1].getghostX() > 850 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 560 && ghost[1].getghostY() < 565)//11
                 {
-                    direccion_lvl2[0] = 'u';
+                    direccion_lvl2[1] = 'u';
                     ghost2_flag1 = true;
                     ghost2_flag2 = true;
                     ghost2_flag3 = true;
                     ghost2_flag4 = true;
                 }
-                if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//12
+
+                if(ghost[1].getghostX() > 850 && ghost[1].getghostX() < 860 && ghost[1].getghostY() > 60 && ghost[1].getghostY() < 65)//12
                 {
                     direccion_lvl2[1] = 'd';
                     ghost2_flag1 = true;
@@ -633,11 +635,6 @@ int PacMan2::game( int nivel, int puntuacion) {
                     ghost2_flag3 = true;
                     ghost2_flag4 = true;
                 }
-
-
-
-
-
             }
 
             for(int i = 0; i < 2; i++){
