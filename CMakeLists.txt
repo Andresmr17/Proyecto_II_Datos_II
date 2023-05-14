@@ -15,6 +15,6 @@ add_executable(Proyecto_II_Datos_II
         Player/lives.cpp
         Resorces/block.h
         Resorces/block.cpp
-        Resorces/points.h Resorces/points.cpp ghosts/ghosts.h ghosts/ghosts.cpp prueba.cpp Game/PacMan2.h Game/PacMan2.cpp Resorces/power.h Resorces/power.cpp Game/PacMan.h Game/PacMan.cpp Game/PacMan3.h Game/PacMan3.cpp)
+        Resorces/points.h Resorces/points.cpp ghosts/ghosts.h ghosts/ghosts.cpp Game/PacMan2.h Game/PacMan2.cpp Resorces/power.h Resorces/power.cpp Game/PacMan.h Game/PacMan.cpp Game/PacMan3.h Game/PacMan3.cpp Resorces/puntuacion_final.h Resorces/puntuacion_final.cpp)
 
 target_link_libraries(Proyecto_II_Datos_II sfml-graphics sfml-audio sfml-system sfml-window)
