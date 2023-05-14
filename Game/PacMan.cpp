@@ -49,7 +49,7 @@ bool flag_7 = true;
 bool flag_8 = true;
 
 
-void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
+void buildobstacles(block blockObj[3], sf::Texture &Obstaculo)
 {
     blockObj[0]= block(70, 50, 100, 220, Obstaculo);
     blockObj[1]= block(740, 395, 100, 200, Obstaculo);
@@ -150,7 +150,7 @@ int PacMan::game( int nivel, int puntuacion) {
         std::cout << "Error load image";
     }
     //create blok array
-    block blockObj[7];
+    block blockObj[4];
 
     //build meteor objets
     buildobstacles(blockObj, Obstaculo);
@@ -159,7 +159,7 @@ int PacMan::game( int nivel, int puntuacion) {
     if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
-    points pointsObj[44];
+    points pointsObj[32];
     bluidPoints(pointsObj, Point);
 
     int x = 850;
@@ -573,11 +573,11 @@ int PacMan::game( int nivel, int puntuacion) {
             window.draw(line, 5, sf::Lines);
 
 
-            for (int i = 0; i < 7; i++)//draw walls
+            for (int i = 0; i < 4; i++)//draw walls
             {
                 window.draw(blockObj[i]);
             }
-            for (int i = 0; i < 44; i++)//draw walls
+            for (int i = 0; i < 32; i++)//draw points
             {
                 window.draw(pointsObj[i]);
             }
@@ -611,6 +611,7 @@ int PacMan::game( int nivel, int puntuacion) {
         }
         window.draw(player1);
 
+        //Detecta si la puntuación es multiplo de 200 para hacer que aparezca el poder
         if (score == 200){
             turnPoweron_1 = true;
         }
@@ -625,29 +626,20 @@ int PacMan::game( int nivel, int puntuacion) {
             return puntos.p(score);
         }
 
-
         //Detecta si la puntuación máxima fue alcanzada
         if (score == 310) {
-            if (nivel == 1) {
+            if (playerLives =! 0) {
                 window.close();
                 PacMan2 pacman;
                 return pacman.game(nivel + 1, score);;
             }
         }
 
-
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             sf::Vector2i mousePos = sf::Mouse::getPosition( window );
             cout << "x" << static_cast<float>( mousePos.x ) << endl;
             cout << "y" << static_cast<float>( mousePos.y ) << endl;
         }
-
-
-
-
-
-
-
 
         window.display();
     }

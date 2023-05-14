@@ -7,6 +7,7 @@
 #include "../Player/player.h"
 #include "../Resorces/points.h"
 #include "../Resorces/power.h"
+#include "../Resorces/puntuacion_final.h"
 #include "../ghosts/ghosts.h"
 #include <thread>
 #include <iostream>
@@ -35,27 +36,24 @@ bool turnPoweron4_1 = false;
 bool turnPoweron4_2 = false;
 bool eaten4 = false;
 
-void buildobstacles4(block blockObj[7], sf::Texture &Obstaculo)
+void buildobstacles4(block blockObj[6], sf::Texture &Obstaculo)
 {
-    blockObj[0]= block(70, 475, 500, 70, Obstaculo);
-    blockObj[1]= block(640, 475, 200, 70, Obstaculo);
-    blockObj[2]= block(720, 105, 120, 370, Obstaculo);
-    blockObj[3]= block(550, 105, 100, 300, Obstaculo);
-    blockObj[4]= block(370, 105, 100, 370, Obstaculo);
-    blockObj[5]= block(70, 310, 300, 100, Obstaculo);
-    blockObj[6]= block(70, 110, 230, 130, Obstaculo);
+    blockObj[0]= block(70, 530, 120, 69, Obstaculo);
+    blockObj[1]= block(720, 50, 120, 240, Obstaculo);
+    blockObj[2]= block(70, 290, 770, 70, Obstaculo);
+    blockObj[3]= block(70, 120, 770, 100, Obstaculo);
+    blockObj[4]= block(70, 430, 770, 100, Obstaculo);
 }
 void bluidPoints4(points pointsObj[], sf::Texture &Point){
-    int posiciones_puntos[44][2]={{20,555},{120,555},{220,555},{320, 555},{550, 555},{650,555},
-                                  {750, 555},{850, 555},{860,450},{860,350},{860,250},{860,150},
-                                  {860,65},{760,65},{660,65},{560, 65},{460, 65},{360, 65},
+    int posiciones_puntos[39][2]={{20,555},{220,555},{320, 555},{550, 555},{650,555},
+                                  {750, 555},{860, 555},{860,450},{860,350},{860,250},{860,150},
+                                  {860,65},{660,65},{560, 65},{460, 65},{360, 65},
                                   {260, 65},{160, 65},{60, 65},{20,125},{20, 205},{20, 305},
-                                  {20, 405},{20, 480},{590, 500},{590, 430},{670, 430},{670, 330},
-                                  {670, 230},{670, 140},{500, 430},{500, 330},{500, 230},{500,130},
-                                  {100, 430},{200, 430},{300, 430},{100,260},{200,260},{300, 260},{320,200},
-                                  {320,120}
+                                  {20, 405},{20, 480},{75, 380},{175, 380},{275, 380},{375, 380},
+                                  {475, 380},{575, 380},{675, 380},{775, 380},{75, 240},{175,240},
+                                  {275, 240},{375, 240},{475, 240},{575,240},{675,240}
     };
-    for(int i = 0; i < 44; i++){
+    for(int i = 0; i < 39; i++){
         pointsObj[i] = points(posiciones_puntos[i][0],posiciones_puntos[i][1], Point);
     }
 }
@@ -64,10 +62,17 @@ int PacMan4::game(int nivel, int puntuacion) {
     ghosts ghost;
 
     bool win = false;
-    int score = puntuacion;
+    int score = 1020;
     int kill = 1;
     int level = nivel;
     int tempScore = 0;
+
+    int ramon_x [4] = {600,590,850,370};
+    int ramon_y [4] = {55,535,310,370};
+
+    int a;
+    int b;
+
     sf::Vertex lineTop[] =//horizontal line
             {
                     sf::Vertex(sf::Vector2f(0, 50)),
@@ -81,7 +86,7 @@ int PacMan4::game(int nivel, int puntuacion) {
 
     //Fuente del texto
     sf::Font font;
-    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
+    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
         std::cout << "Can't load font";
     }
 
@@ -109,7 +114,7 @@ int PacMan4::game(int nivel, int puntuacion) {
 
     //Arrow up - Down
     sf::Texture upDown;
-    if (!upDown.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
+    if (!upDown.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
         std::cout << "Error load image";
     }
 
@@ -122,25 +127,25 @@ int PacMan4::game(int nivel, int puntuacion) {
 
     //create obstacles objects
     sf::Texture Obstaculo;
-    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
+    if (!Obstaculo.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
         std::cout << "Error load image";
     }
     //create blok array
-    block blockObj[7];
+    block blockObj[6];
     //build meteor objets
     buildobstacles4(blockObj, Obstaculo);
 
     sf::Texture Point;
-    if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
+    if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
-    points pointsObj[44];
+    points pointsObj[40];
     bluidPoints4(pointsObj, Point);
     int x = 850;
     int y = 60;
     bool front = false;
     sf::Texture ghostTexture;
-    if (!ghostTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    if (!ghostTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
 
@@ -151,7 +156,7 @@ int PacMan4::game(int nivel, int puntuacion) {
     sf::Sprite background;
     sf::Vector2u TextureSize;  //Added to store texture size.
     sf::Vector2u WindowSize;   //Added to store window size.
-    if (!backgroundPic.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
+    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
         std::cout << "Error load image";
     } else {
         TextureSize = backgroundPic.getSize(); //Get size of texture.
@@ -166,16 +171,16 @@ int PacMan4::game(int nivel, int puntuacion) {
     sf::Texture Down;
     sf::Texture Right;
     sf::Texture Left;
-    if (!Up.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
+    if (!Up.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
         std::cout << "Error load image";
     }
-    if (!Down.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
+    if (!Down.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
         std::cout << "Error load image";
     }
-    if (!Right.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
+    if (!Right.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
         std::cout << "Error load image";
     }
-    if (!Left.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
+    if (!Left.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
         std::cout << "Error load image";
     }
 
@@ -183,11 +188,9 @@ int PacMan4::game(int nivel, int puntuacion) {
     ghost.setTexture(&ghostTexture);
 
     sf::Texture powerTexture;
-    if (!powerTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
         std::cout << "Error load image";
     }
-
-    //obj[cantidad_fantasmas].move(i,d);
 
     //player.setTexture(&texture);
     player player1 = player(420, 548, Right);
@@ -325,7 +328,8 @@ int PacMan4::game(int nivel, int puntuacion) {
                     }
                 }
                 press_flag4 = true;
-                for(int i = 0; i < 44; i++){
+
+                for(int i = 0; i < 39; i++){
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
@@ -368,13 +372,14 @@ int PacMan4::game(int nivel, int puntuacion) {
                 loop4++;
             }
 
-
-            /*if(sf::Event::MouseButtonPressed){
-                sf::Mouse::getPosition( window );
-                sf::Vector2i mousePos = sf::Mouse::getPosition( window );
-                cout << static_cast<float>( mousePos.x ) << endl;
-                cout << static_cast<float>( mousePos.y ) << endl;
-            }*/
+            if(ghost.getGlobalBounds().intersects(player1.getGlobalBounds())){
+                int ramon = rand() % 4;
+                a = ramon_x[ramon];
+                b = ramon_y[ramon];
+                player1.playerX = a;
+                player1.playerY = b;
+                playerLives4 --;
+            }
 
             // update player position
             player1.setPosition(player1.playerX, player1.playerY);
@@ -384,11 +389,11 @@ int PacMan4::game(int nivel, int puntuacion) {
             window.draw(background);
             window.draw(lineTop, 5, sf::Lines);
             window.draw(line, 5, sf::Lines);
-            for (int i = 0; i < 7; i++)//draw walls
+            for (int i = 0; i < 6; i++)//draw walls
             {
                 window.draw(blockObj[i]);
             }
-            for (int i = 0; i < 44; i++)//draw points
+            for (int i = 0; i < 39; i++)//draw points
             {
                 window.draw(pointsObj[i]);
             }
@@ -434,37 +439,45 @@ int PacMan4::game(int nivel, int puntuacion) {
         }
         window.draw(player1);
 
-        if (score == 1400){
+        if (score == 1200){
             turnPoweron4_1 = true;
         }
 
         if (turnPoweron4_1 == true){
-            fruit.setPosition(310, 250);
+            fruit.setPosition(585, 545);
             window.draw(fruit);
         }
 
-        if (score == 1600){
+        if (score == 1400){
             turnPoweron4_2 = true;
         }
 
         if (turnPoweron4_2 == true){
-            fruit.setPosition(585, 500);
+            fruit.setPosition(310, 230);
             window.draw(fruit);
         }
 
+        if (playerLives4 == 0){
+            puntuacion_final puntos;
+            return puntos.p(score);
+        }
+
         //Detecta si la puntuación máxima fue alcanzada
-        if (score == 1760) {
-            if (nivel == 4) {
+        if (score == 1410) {
+            if (playerLives4 != 0) {
                 juego4 == false;
                 window.close();
+                puntuacion_final puntos;
+                return puntos.p(score);
+
             }
         }
 
-        /*else if(player){
-
-        }*/
-
-        //Menu control Exit game or Play again
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            sf::Vector2i mousePos = sf::Mouse::getPosition( window );
+            cout << "x" << static_cast<float>( mousePos.x ) << endl;
+            cout << "y" << static_cast<float>( mousePos.y ) << endl;
+        }
 
         window.display();
     }
