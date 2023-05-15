@@ -47,9 +47,12 @@ bool flag_5 = true;
 bool flag_6 = true;
 bool flag_7 = true;
 bool flag_8 = true;
+bool move_ghost = true;
+bool power_player = false;
+bool one = true;
 
 
-void buildobstacles(block blockObj[3], sf::Texture &Obstaculo)
+void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
 {
     blockObj[0]= block(70, 50, 100, 220, Obstaculo);
     blockObj[1]= block(740, 395, 100, 200, Obstaculo);
@@ -260,7 +263,7 @@ int PacMan::game( int nivel, int puntuacion) {
 
 
                     player1.setTexture(&Left);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 4; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_right && flag_up && flag_down) {
                                 //player1.playerX += 0;
@@ -292,7 +295,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                     press_flag = false;
                     player1.setTexture(&Right);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 4; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_left && flag_up && flag_down) {
                                 //player1.playerX += 0;
@@ -323,7 +326,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                     press_flag = false;
                     player1.setTexture(&Up);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 4; i++) {
 
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
 
@@ -355,7 +358,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                     press_flag = false;
                     player1.setTexture(&Down);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 4; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_left && flag_up && flag_right) {
                                 //player1.playerX += 0;
@@ -383,13 +386,13 @@ int PacMan::game( int nivel, int puntuacion) {
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
-
                     }
                 }
             }
 
             if(backtracking_move_lvl1){
                 //aqui debe ir el movimiento en backtracking
+                move_ghost = false;
             }
 
             if(ghost_normal_move_lvl1){
@@ -517,52 +520,72 @@ int PacMan::game( int nivel, int puntuacion) {
             }
 
             //Movimiento del fantasma
-            if(direccion_lvl1 == 'u'){
-                float sx;
-                float sy;
-                sx = ghost.getghostX();
-                sy = ghost.getghostY() - ghost.speed;
-                ghost.setghostX(sx);
-                ghost.setghostY(sy);
-                ghost.setPosition(sx, sy);
+            if(move_ghost){
+                if(direccion_lvl1 == 'u'){
+                    float sx;
+                    float sy;
+                    sx = ghost.getghostX();
+                    sy = ghost.getghostY() - ghost.speed;
+                    ghost.setghostX(sx);
+                    ghost.setghostY(sy);
+                    ghost.setPosition(sx, sy);
+                }
+
+                if(direccion_lvl1 == 'd'){
+                    float sx;
+                    float sy;
+                    sx = ghost.getghostX();
+                    sy = ghost.getghostY() + ghost.speed;
+                    ghost.setghostX(sx);
+                    ghost.setghostY(sy);
+                    ghost.setPosition(sx, sy);
+                }
+                if(direccion_lvl1 == 'r'){
+                    float sx;
+                    float sy;
+                    sx = ghost.getghostX()+ ghost.speed;;
+                    sy = ghost.getghostY() ;
+                    ghost.setghostX(sx);
+                    ghost.setghostY(sy);
+                    ghost.setPosition(sx, sy);
+                }
+                if(direccion_lvl1 == 'l'){
+                    float sx;
+                    float sy;
+                    sx = ghost.getghostX() - ghost.speed;;
+                    sy = ghost.getghostY() ;
+                    ghost.setghostX(sx);
+                    ghost.setghostY(sy);
+                    ghost.setPosition(sx, sy);
+                }
             }
 
-            if(direccion_lvl1 == 'd'){
-                float sx;
-                float sy;
-                sx = ghost.getghostX();
-                sy = ghost.getghostY() + ghost.speed;
-                ghost.setghostX(sx);
-                ghost.setghostY(sy);
-                ghost.setPosition(sx, sy);
-            }
-            if(direccion_lvl1 == 'r'){
-                float sx;
-                float sy;
-                sx = ghost.getghostX()+ ghost.speed;;
-                sy = ghost.getghostY() ;
-                ghost.setghostX(sx);
-                ghost.setghostY(sy);
-                ghost.setPosition(sx, sy);
-            }
-            if(direccion_lvl1 == 'l'){
-                float sx;
-                float sy;
-                sx = ghost.getghostX() - ghost.speed;;
-                sy = ghost.getghostY() ;
-                ghost.setghostX(sx);
-                ghost.setghostY(sy);
-                ghost.setPosition(sx, sy);
-            }
 
             if(ghost.getGlobalBounds().intersects(player1.getGlobalBounds())){
-                int ramon = rand() % 3;
-                a = ramon_x[ramon];
-                b = ramon_y[ramon];
-                player1.playerX = a;
-                player1.playerY = b;
-                playerLives --;
+                if(power_player){
+                    scoreText.setString("Puntuacion : " + std::to_string(score+=50));
+                    ghost.setPosition(1000,1000);
+                }
+                else{
+                    int ramon = rand() % 3;
+                    a = ramon_x[ramon];
+                    b = ramon_y[ramon];
+                    player1.playerX = a;
+                    player1.playerY = b;
+                    playerLives --;
+                }
+
             }
+
+            if(turnPoweron_1){
+                if(fruit.getGlobalBounds().intersects(player1.getGlobalBounds())){
+                    cout << "hola" << endl;
+                    power_player = true;
+                    fruit.setPosition(1000, 1000);
+                    one = false;
+                }
+            }
+
 
             // update player position
             player1.setPosition(player1.playerX, player1.playerY);
@@ -581,14 +604,19 @@ int PacMan::game( int nivel, int puntuacion) {
             {
                 window.draw(pointsObj[i]);
             }
-
+            if (turnPoweron_1){
+                if(one){
+                    fruit.setPosition(10, 65);
+                    window.draw(fruit);
+                }
+            }
             window.draw(scoreText);
-
             window.draw(playerLevel);
-
             // reset the timeSinceLastUpdate to 0
             timeSinceLastUpdate = sf::Time::Zero;
             loop++;
+
+
         }
 
         window.draw(ghost);
@@ -614,11 +642,8 @@ int PacMan::game( int nivel, int puntuacion) {
         //Detecta si la puntuación es multiplo de 200 para hacer que aparezca el poder
         if (score == 200){
             turnPoweron_1 = true;
-        }
-
-        if (turnPoweron_1 == true){
-            fruit.setPosition(10, 65);
-            window.draw(fruit);
+            ghost_normal_move_lvl1 = false;
+            backtracking_move_lvl1 = true;
         }
 
         if (playerLives == 0){
@@ -635,11 +660,6 @@ int PacMan::game( int nivel, int puntuacion) {
             }
         }
 
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            sf::Vector2i mousePos = sf::Mouse::getPosition( window );
-            cout << "x" << static_cast<float>( mousePos.x ) << endl;
-            cout << "y" << static_cast<float>( mousePos.y ) << endl;
-        }
 
         window.display();
     }
