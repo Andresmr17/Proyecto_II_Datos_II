@@ -37,7 +37,7 @@ bool turnPoweron_2 = false;
 bool eaten = false;
 
 bool ghost_normal_move_lvl1 = true;
-bool ghost_back_move = false;
+bool backtracking_move_lvl1 = false;
 char direccion_lvl1 = 'd';
 bool flag_1 = true;
 bool flag_2 = true;
@@ -388,7 +388,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 }
             }
 
-            if(ghost_back_move){
+            if(backtracking_move_lvl1){
                 //aqui debe ir el movimiento en backtracking
             }
 

@@ -26,6 +26,7 @@ int countDeadEnemy2 = 0;
 float deltaTime2 = 1.0f / 60.0f;
 
 bool ghost_normal_move_lvl2 = true;
+bool backtracking_move_lvl2 = false;
 bool isDeath2 = false;
 bool press_flag2 = true;
 bool flag_up2 = true;
@@ -393,6 +394,10 @@ int PacMan2::game( int nivel, int puntuacion) {
 
                     }
                 }
+            }
+
+            if(backtracking_move_lvl2){
+                //Se agrega la logica del backtracking
             }
 
             //Movimiento del fantasma rosado

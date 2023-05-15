@@ -17,8 +17,8 @@
 using namespace std;
 
 char direccion_lvl3[3] = {'d', 'd', 'd'};
-bool backtracking_move = false;
-bool normal_move = true;
+bool backtracking_move_lvl3 = false;
+bool ghost_normal_move_lvl3 = true;
 
 bool ghost1_flag1_lvl3 = true;
 bool ghost1_flag2_lvl3 = true;
@@ -412,11 +412,11 @@ int PacMan3::game( int nivel, int puntuacion) {
                 }
             }
 
-            if(backtracking_move){
+            if(backtracking_move_lvl3){
                 //Se debe poner el movimiento del backtracking
             }
 
-            if(normal_move){
+            if(ghost_normal_move_lvl3){
 
                 //Movimiento del fantasma naranja
                 if(ghost1_flag1_lvl3){
