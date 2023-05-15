@@ -16,6 +16,21 @@
 
 using namespace std;
 
+char direccion_lvl3[3] = {'d', 'd', 'd'};
+bool backtracking_move = false;
+bool normal_move = true;
+
+bool ghost1_flag1_lvl3 = true;
+bool ghost1_flag2_lvl3 = true;
+bool ghost1_flag3_lvl3 = true;
+
+bool ghost2_flag1_lvl3 = true;
+bool ghost2_flag2_lvl3 = true;
+bool ghost2_flag3_lvl3 = true;
+
+bool ghost3_flag1_lvl3 = true;
+bool ghost3_flag2_lvl3 = true;
+bool ghost3_flag3_lvl3 = true;
 
 int playerLives3 = 3;
 int loop3 = 1;
@@ -38,41 +53,43 @@ bool eaten3 = false;
 
 
 
-void buildobstacles3(block blockObj[7], sf::Texture &Obstaculo)
-{
-    blockObj[0]= block(70, 110, 750, 50, Obstaculo);
-    blockObj[1]= block(70, 490, 750, 50, Obstaculo);
-    blockObj[2]= block(70, 50, 50, 235, Obstaculo);
-    blockObj[3]= block(70, 360, 50, 180, Obstaculo);
-    blockObj[4]= block(790, 110, 50, 180, Obstaculo);
-    blockObj[5]= block(790, 360, 50, 235, Obstaculo);
-    blockObj[6]= block(185, 235, 550, 185, Obstaculo);
-
+void buildobstacles3(block blockObj[10], sf::Texture &Obstaculo) {
+    blockObj[0] = block(120, 110, 670, 50, Obstaculo);
+    blockObj[1] = block(120, 490, 670, 50, Obstaculo);
+    blockObj[2] = block(70, 50, 50, 237, Obstaculo);
+    blockObj[3] = block(70, 360, 50, 237, Obstaculo);
+    blockObj[4] = block(790, 50, 50, 237, Obstaculo);
+    blockObj[5] = block(790, 360, 50, 237, Obstaculo);
+    blockObj[6] = block(190, 235, 600, 50, Obstaculo);
+    blockObj[7] = block(120, 50, 670, 60, Obstaculo);
+    blockObj[8] = block(120, 542, 670, 55, Obstaculo);
+    blockObj[9] = block(190, 360, 600, 50, Obstaculo);
 }
 
 void bluidPoints3(points pointsObj[], sf::Texture &Point){
 
-    int posiciones_puntos[44][2]={{60,65},{160,65},{260,65},{360, 65},{460, 65},{560,65},
-                                  {660, 65},{760, 65},{860,65},{20,135},{20,215},{20,315},
-                                  {20,405},{20,480},{60,555},{160, 555},{260, 555},{360, 555},
-                                  {860, 555},{560, 555},{660, 555},{760,555},{80, 315},{135, 315},
-                                  {810, 315},{860, 215},{860, 315},{860, 405},{860, 480},{135, 185},
-                                  {235, 185},{335, 185},{435, 185},{535, 185},{635, 185},{735,185},
-                                  {135, 440},{235, 440},{335, 440},{435,440},{535,440},{635, 440},{735,440},
-                                  {750,315}
+    int posiciones_puntos[36][2]={
+            {860,65},{20,135},{20,215},{20,315},
+            {20,405},{20,480},{80, 315},{135, 315},
+            {810, 315},{860, 215},{860, 315},{860, 405},
+            {860, 480},{135, 185},{235, 185},{335, 185},
+            {435, 185},{535, 185},{635, 185},{735,185},
+            {135, 440},{235, 440},{335, 440},{435,440},
+            {535,440},{635, 440},{735,440},{750,315},
+            {23, 79}, {323, 304},{423, 304}, {523, 304},
+            {623, 304},{223, 304}, {864, 148}, {863, 565}
     };
 
-    for(int i = 0; i < 44; i++){
+    for(int i = 0; i < 36; i++){
         pointsObj[i] = points(posiciones_puntos[i][0],posiciones_puntos[i][1], Point);
 
     }
 }
 
+
 int PacMan3::game( int nivel, int puntuacion) {
 
-    ghosts ghost1;
-    ghosts ghost2;
-    ghosts ghost3;
+    ghosts ghost[3];
     bool win = false;
     int score = puntuacion;
     int kill = 1;
@@ -92,7 +109,7 @@ int PacMan3::game( int nivel, int puntuacion) {
 
     //Fuente del texto
     sf::Font font;
-    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
+    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
         std::cout << "Can't load font";
     }
 
@@ -122,7 +139,7 @@ int PacMan3::game( int nivel, int puntuacion) {
 
     //Arrow up - Down
     sf::Texture upDown;
-    if (!upDown.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
+    if (!upDown.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
         std::cout << "Error load image";
     }
 
@@ -136,41 +153,41 @@ int PacMan3::game( int nivel, int puntuacion) {
 
     //create obstacles objects
     sf::Texture Obstaculo;
-    if (!Obstaculo.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
+    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
         std::cout << "Error load image";
     }
     //create blok array
-    block blockObj[7];
+    block blockObj[10];
 
     //build meteor objets
     buildobstacles3(blockObj, Obstaculo);
 
     sf::Texture Point;
-    if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
+    if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
-    points pointsObj[44];
+    points pointsObj[36];
     bluidPoints3(pointsObj, Point);
 
     int x = 850;
     int y = 60;
 
     sf::Texture ghost1Texture;
-    if (!ghost1Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    if (!ghost1Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
     sf::Texture ghost2Texture;
-    if (!ghost2Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
+    if (!ghost2Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
         std::cout << "Error load image";
     }
     sf::Texture ghost3Texture;
-    if (!ghost3Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma3.png")) {
+    if (!ghost3Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma3.png")) {
         std::cout << "Error load image";
     }
 
     bool front = false;
     sf::Texture ghostTexture;
-    if (!ghostTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    if (!ghostTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
 
@@ -182,7 +199,7 @@ int PacMan3::game( int nivel, int puntuacion) {
     sf::Sprite background;
     sf::Vector2u TextureSize;  //Added to store texture size.
     sf::Vector2u WindowSize;   //Added to store window size.
-    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
+    if (!backgroundPic.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
         std::cout << "Error load image";
     } else {
         TextureSize = backgroundPic.getSize(); //Get size of texture.
@@ -200,36 +217,36 @@ int PacMan3::game( int nivel, int puntuacion) {
     sf::Texture Down;
     sf::Texture Right;
     sf::Texture Left;
-    if (!Up.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
+    if (!Up.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
         std::cout << "Error load image";
     }
-    if (!Down.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
+    if (!Down.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
         std::cout << "Error load image";
     }
-    if (!Right.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
+    if (!Right.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
         std::cout << "Error load image";
     }
-    if (!Left.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
+    if (!Left.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
         std::cout << "Error load image";
     }
 
     sf::Texture powerTexture;
-    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+    if (!powerTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
         std::cout << "Error load image";
     }
 
     //Crea objetos enemigos
-    ghost1 = ghosts(x, y, front);
-    ghost1.setTexture(&ghost1Texture);
+    ghost[0] = ghosts(x, y, front);
+    ghost[0].setTexture(&ghost1Texture);
 
-    ghost2 = ghosts(x, 160, front);
-    ghost2.setTexture(&ghost2Texture);
+    ghost[1] = ghosts(x, 160, front);
+    ghost[1].setTexture(&ghost2Texture);
 
-    ghost3 = ghosts(x, 260, front);
-    ghost3.setTexture(&ghost3Texture);
+    ghost[2] = ghosts(x, 260, front);
+    ghost[2].setTexture(&ghost3Texture);
 
     //player.setTexture(&texture);
-    player player1 = player(420, 548, Right);
+    player player1 = player(12, 539, Right);
     lives live1 = lives(5, 610, Right);
     lives live2 = lives(100, 610, Right);
     lives live3 = lives(200, 610, Right);
@@ -267,7 +284,7 @@ int PacMan3::game( int nivel, int puntuacion) {
 
 
                     player1.setTexture(&Left);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 10; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_right3 && flag_up3 && flag_down3) {
                                 //player1.playerX += 0;
@@ -299,7 +316,7 @@ int PacMan3::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                     press_flag3 = false;
                     player1.setTexture(&Right);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 10; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_left3 && flag_up3 && flag_down3) {
                                 //player1.playerX += 0;
@@ -330,7 +347,7 @@ int PacMan3::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                     press_flag3 = false;
                     player1.setTexture(&Up);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 10; i++) {
 
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
 
@@ -362,7 +379,7 @@ int PacMan3::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                     press_flag3 = false;
                     player1.setTexture(&Down);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 10; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_left3 && flag_up3 && flag_right3) {
                                 //player1.playerX += 0;
@@ -386,12 +403,358 @@ int PacMan3::game( int nivel, int puntuacion) {
                 }
                 press_flag3 = true;
 
-                for(int i = 0; i < 44; i++){
+                for(int i = 0; i < 36; i++){
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
 
                     }
+                }
+            }
+
+            if(backtracking_move){
+                //Se debe poner el movimiento del backtracking
+            }
+
+            if(normal_move){
+
+                //Movimiento del fantasma naranja
+                if(ghost1_flag1_lvl3){
+                    if(ghost[0].getghostX() > 845 && ghost[0].getghostX() < 852 && ghost[0].getghostY() > 301 && ghost[0].getghostY() < 305)//1
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[0] = dir[num];
+                        ghost1_flag1_lvl3 = false;
+                        ghost1_flag2_lvl3 = true;
+                        ghost1_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[0].getghostX() > 845 && ghost[0].getghostX() < 852 && ghost[0].getghostY() > 545 && ghost[0].getghostY() < 550)//2
+                {
+                    direccion_lvl3[0] = 'u';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+                if(ghost[0].getghostX() > 845 && ghost[0].getghostX() < 852 && ghost[0].getghostY() > 73 && ghost[0].getghostY() < 75)//3
+                {
+                    direccion_lvl3[0] = 'd';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+
+                if(ghost1_flag2_lvl3){
+                    if(ghost[0].getghostX() > 137 && ghost[0].getghostX() < 140 && ghost[0].getghostY() > 301 && ghost[0].getghostY() < 305)//4
+                    {
+                        char dir[4] = {'l', 'd', 'u', 'r'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl3[0] = dir[num];
+                        ghost1_flag2_lvl3 = false;
+                        ghost1_flag1_lvl3 = true;
+                        ghost1_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[0].getghostX() > 137 && ghost[0].getghostX() < 140 && ghost[0].getghostY() > 176 && ghost[0].getghostY() < 180)//5
+                {
+                    if(direccion_lvl3[0] == 'u'){
+                        direccion_lvl3[0] = 'r';
+                    }
+                    if(direccion_lvl3[0] == 'l'){
+                        direccion_lvl3[0] = 'd';
+                        ghost1_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[0].getghostX() > 743 && ghost[0].getghostX() < 745 && ghost[0].getghostY() > 176 && ghost[0].getghostY() < 180)//6
+                {
+                    direccion_lvl3[0] = 'l';
+                }
+
+                if(ghost[0].getghostX() > 137 && ghost[0].getghostX() < 140 && ghost[0].getghostY() > 435 && ghost[0].getghostY() < 439)//7
+                {
+                    if(direccion_lvl3[0] == 'd'){
+                        direccion_lvl3[0] = 'r';
+                    }
+                    if(direccion_lvl3[0] == 'l'){
+                        direccion_lvl3[0] = 'u';
+                        ghost1_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[0].getghostX() > 743 && ghost[0].getghostX() < 745 && ghost[0].getghostY() > 435 && ghost[0].getghostY() < 439)//8
+                {
+                    direccion_lvl3[0] = 'l';
+                }
+
+                if(ghost1_flag3_lvl3){
+                    if(ghost[0].getghostX() > 16 && ghost[0].getghostX() < 18 && ghost[0].getghostY() > 301 && ghost[0].getghostY() < 305)//9
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[0] = dir[num];
+                        ghost1_flag2_lvl3 = true;
+                        ghost1_flag1_lvl3 = true;
+                        ghost1_flag3_lvl3 = false;
+                    }
+                }
+                if(ghost[0].getghostX() > 16 && ghost[0].getghostX() < 18 && ghost[0].getghostY() > 73 && ghost[0].getghostY() < 75)//10
+                {
+                    direccion_lvl3[0] = 'd';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+                if(ghost[0].getghostX() > 16 && ghost[0].getghostX() < 18 && ghost[0].getghostY() > 545 && ghost[0].getghostY() < 550)//11
+                {
+                    direccion_lvl3[0] = 'u';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+
+                //Movimiento del fantasma rosado
+                if(ghost2_flag1_lvl3){
+                    if(ghost[1].getghostX() > 845 && ghost[1].getghostX() < 852 && ghost[1].getghostY() > 301 && ghost[1].getghostY() < 305)//1
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[1] = dir[num];
+                        ghost2_flag1_lvl3 = false;
+                        ghost2_flag2_lvl3 = true;
+                        ghost2_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[1].getghostX() > 845 && ghost[1].getghostX() < 852 && ghost[1].getghostY() > 545 && ghost[1].getghostY() < 550)//2
+                {
+                    direccion_lvl3[1] = 'u';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+                if(ghost[1].getghostX() > 845 && ghost[1].getghostX() < 852 && ghost[1].getghostY() > 73 && ghost[1].getghostY() < 75)//3
+                {
+                    direccion_lvl3[1] = 'd';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+
+                if(ghost2_flag2_lvl3){
+                    if(ghost[1].getghostX() > 137 && ghost[1].getghostX() < 140 && ghost[1].getghostY() > 301 && ghost[1].getghostY() < 305)//4
+                    {
+                        char dir[4] = {'l', 'd', 'u', 'r'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl3[1] = dir[num];
+                        ghost2_flag2_lvl3 = false;
+                        ghost2_flag1_lvl3 = true;
+                        ghost2_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[1].getghostX() > 137 && ghost[1].getghostX() < 140 && ghost[1].getghostY() > 176 && ghost[1].getghostY() < 180)//5
+                {
+                    if(direccion_lvl3[1] == 'u'){
+                        direccion_lvl3[1] = 'r';
+                    }
+                    if(direccion_lvl3[1] == 'l'){
+                        direccion_lvl3[1] = 'd';
+                        ghost2_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[1].getghostX() > 743 && ghost[1].getghostX() < 745 && ghost[1].getghostY() > 176 && ghost[1].getghostY() < 180)//6
+                {
+                    direccion_lvl3[1] = 'l';
+                }
+
+                if(ghost[1].getghostX() > 137 && ghost[1].getghostX() < 140 && ghost[1].getghostY() > 435 && ghost[1].getghostY() < 439)//7
+                {
+                    if(direccion_lvl3[1] == 'd'){
+                        direccion_lvl3[1] = 'r';
+                    }
+                    if(direccion_lvl3[1] == 'l'){
+                        direccion_lvl3[1] = 'u';
+                        ghost2_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[1].getghostX() > 743 && ghost[1].getghostX() < 745 && ghost[1].getghostY() > 435 && ghost[1].getghostY() < 439)//8
+                {
+                    direccion_lvl3[1] = 'l';
+                }
+
+                if(ghost2_flag3_lvl3){
+                    if(ghost[1].getghostX() > 16 && ghost[1].getghostX() < 18 && ghost[1].getghostY() > 301 && ghost[1].getghostY() < 305)//9
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[1] = dir[num];
+                        ghost2_flag2_lvl3 = true;
+                        ghost2_flag1_lvl3 = true;
+                        ghost2_flag3_lvl3 = false;
+                    }
+                }
+                if(ghost[1].getghostX() > 16 && ghost[1].getghostX() < 18 && ghost[1].getghostY() > 73 && ghost[1].getghostY() < 75)//10
+                {
+                    direccion_lvl3[1] = 'd';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+                if(ghost[1].getghostX() > 16 && ghost[1].getghostX() < 18 && ghost[1].getghostY() > 545 && ghost[1].getghostY() < 550)//11
+                {
+                    direccion_lvl3[1] = 'u';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+
+                //Movimiento del fantasma celeste
+                if(ghost3_flag1_lvl3){
+                    if(ghost[2].getghostX() > 845 && ghost[2].getghostX() < 852 && ghost[2].getghostY() > 301 && ghost[2].getghostY() < 305)//1
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[2] = dir[num];
+                        ghost3_flag1_lvl3 = false;
+                        ghost3_flag2_lvl3 = true;
+                        ghost3_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[2].getghostX() > 845 && ghost[2].getghostX() < 852 && ghost[2].getghostY() > 545 && ghost[2].getghostY() < 550)//2
+                {
+                    direccion_lvl3[2] = 'u';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+                if(ghost[2].getghostX() > 845 && ghost[2].getghostX() < 852 && ghost[2].getghostY() > 73 && ghost[2].getghostY() < 75)//3
+                {
+                    direccion_lvl3[2] = 'd';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+
+                if(ghost3_flag2_lvl3){
+                    if(ghost[2].getghostX() > 137 && ghost[2].getghostX() < 140 && ghost[2].getghostY() > 301 && ghost[2].getghostY() < 305)//4
+                    {
+                        char dir[4] = {'l', 'd', 'u', 'r'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl3[2] = dir[num];
+                        ghost3_flag2_lvl3 = false;
+                        ghost3_flag1_lvl3 = true;
+                        ghost3_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[2].getghostX() > 137 && ghost[2].getghostX() < 140 && ghost[2].getghostY() > 176 && ghost[2].getghostY() < 180)//5
+                {
+                    if(direccion_lvl3[2] == 'u'){
+                        direccion_lvl3[2] = 'r';
+                    }
+                    if(direccion_lvl3[2] == 'l'){
+                        direccion_lvl3[2] = 'd';
+                        ghost3_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[2].getghostX() > 743 && ghost[2].getghostX() < 745 && ghost[2].getghostY() > 176 && ghost[2].getghostY() < 180)//6
+                {
+                    direccion_lvl3[2] = 'l';
+                }
+
+                if(ghost[2].getghostX() > 137 && ghost[2].getghostX() < 140 && ghost[2].getghostY() > 435 && ghost[2].getghostY() < 439)//7
+                {
+                    if(direccion_lvl3[2] == 'd'){
+                        direccion_lvl3[2] = 'r';
+                    }
+                    if(direccion_lvl3[2] == 'l'){
+                        direccion_lvl3[2] = 'u';
+                        ghost3_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[2].getghostX() > 743 && ghost[2].getghostX() < 745 && ghost[2].getghostY() > 435 && ghost[2].getghostY() < 439)//8
+                {
+                    direccion_lvl3[2] = 'l';
+                }
+
+                if(ghost3_flag3_lvl3){
+                    if(ghost[2].getghostX() > 16 && ghost[2].getghostX() < 18 && ghost[2].getghostY() > 301 && ghost[2].getghostY() < 305)//9
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[2] = dir[num];
+                        ghost3_flag2_lvl3 = true;
+                        ghost3_flag1_lvl3 = true;
+                        ghost3_flag3_lvl3 = false;
+                    }
+                }
+                if(ghost[2].getghostX() > 16 && ghost[2].getghostX() < 18 && ghost[2].getghostY() > 73 && ghost[2].getghostY() < 75)//10
+                {
+                    direccion_lvl3[2] = 'd';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+                if(ghost[2].getghostX() > 16 && ghost[2].getghostX() < 18 && ghost[2].getghostY() > 545 && ghost[2].getghostY() < 550)//11
+                {
+                    direccion_lvl3[2] = 'u';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+
+            }
+
+            //Movimiento de los fantasmas
+            for(int i = 0; i < 3; i++){
+                if(direccion_lvl3[i] == 'u'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX();
+                    sy = ghost[i].getghostY() - ghost[i].speed;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+
+                if(direccion_lvl3[i] == 'd'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX();
+                    sy = ghost[i].getghostY() + ghost[i].speed;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+                if(direccion_lvl3[i] == 'r'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX() + ghost[i].speed;;
+                    sy = ghost[i].getghostY() ;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
+                }
+                if(direccion_lvl3[i] == 'l'){
+                    float sx;
+                    float sy;
+                    sx = ghost[i].getghostX() - ghost[i].speed;;
+                    sy = ghost[i].getghostY() ;
+                    ghost[i].setghostX(sx);
+                    ghost[i].setghostY(sy);
+                    ghost[i].setPosition(sx, sy);
                 }
             }
 
@@ -404,11 +767,11 @@ int PacMan3::game( int nivel, int puntuacion) {
             window.draw(line, 5, sf::Lines);
 
 
-            for (int i = 0; i < 7; i++)//draw walls
+            for (int i = 0; i < 10; i++)//draw walls
             {
                 window.draw(blockObj[i]);
             }
-            for (int i = 0; i < 44; i++)//draw walls
+            for (int i = 0; i < 36; i++)//draw walls
             {
                 window.draw(pointsObj[i]);
             }
@@ -434,9 +797,9 @@ int PacMan3::game( int nivel, int puntuacion) {
             playerLives --;
         }*/
 
-        window.draw(ghost1);
-        window.draw(ghost2);
-        window.draw(ghost3);
+        window.draw(ghost[0]);
+        window.draw(ghost[1]);
+        window.draw(ghost[2]);
 
         //Muestra las vidas del jugador
         if (playerLives3== 3) {
@@ -479,6 +842,12 @@ int PacMan3::game( int nivel, int puntuacion) {
                 PacMan4 pacman;
                 return pacman.game(nivel + 1, score);;
             }
+        }
+
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            sf::Vector2i mousePos = sf::Mouse::getPosition( window );
+            cout << "x" << static_cast<float>( mousePos.x ) << endl;
+            cout << "y" << static_cast<float>( mousePos.y ) << endl;
         }
 
 
