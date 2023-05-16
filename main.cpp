@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include "Game/PacMan2.h"
+#include "Game/PacMan.h"
 #include <iostream>
+#include "Server/Server.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
  * @return Retorna la ventana del juego.
  */
 
-constexpr const char* const fondo = "/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Bienvenida.png";
+constexpr const char* const fondo = "/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Bienvenida.png";
 
 int main()
 {
@@ -37,7 +38,7 @@ int main()
     // Creamos un objeto fuente
     sf::Font font;
     // Intentamos cargarla
-    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
+    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
     {
         return EXIT_FAILURE;
     }
@@ -59,7 +60,7 @@ int main()
     // Creamos un objeto boton
     sf::Texture iniciar;
     // Intentamos cargarla
-    if (!iniciar.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/btnIniciar.png"))
+    if (!iniciar.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/btnIniciar.png"))
     {
         return EXIT_FAILURE;
     }
@@ -73,7 +74,7 @@ int main()
     // Creamos un objeto boton
     sf::Texture salir;
     // Intentamos cargarla
-    if (!salir.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/btnSalir.png"))
+    if (!salir.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/btnSalir.png"))
     {
         return EXIT_FAILURE;
     }
@@ -111,7 +112,8 @@ int main()
                     if (iniciarImage.getGlobalBounds().contains( mousePosF ) )
                     {
                         window.close();
-                        PacMan2 pacman;
+
+                        PacMan pacman;
                         return pacman.game(1,0);
                     }
                     if (salirImage.getGlobalBounds().contains( mousePosF ) )
@@ -137,6 +139,9 @@ int main()
 
         // Actualizamos la ventana
         window.display();
+
+        //Server servidor = Server();
+        //servidor.server();
     }
     return 0;
 }
