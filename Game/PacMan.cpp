@@ -34,12 +34,12 @@ bool flag_left = true;
 
 bool turnPoweron_1 = false;
 bool turnPoweron_2 = false;
-bool more = false;
+bool set_ghost = false;
 int counter = 0;
 
 bool ghost_normal_move_lvl1 = true;
 bool backtracking_move_lvl1 = false;
-char direccion_lvl1 = 'd';
+char direccion_lvl1 = 'l';
 bool flag_1 = true;
 bool flag_2 = true;
 bool flag_3 = true;
@@ -55,6 +55,12 @@ bool next_lvl = false;
 int verification = 0;
 
 
+/**
+ * @brief se encarga de hacer la intancia de las paredes mostradas en el juego
+ * @param blockObj el objeto que se desea instanciar
+ * @param Obstaculo la imagen que se desea colocar
+ * @return no tiene retorno
+ */
 void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
 {
     blockObj[0]= block(70, 50, 100, 220, Obstaculo);
@@ -64,6 +70,11 @@ void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
 
 }
 
+/**
+ * @brief se encarga de instanciar los puntos que se van a mostrar en la pantalla de juego
+ * @param pointsObj son los objetos puntos que se van a crear
+ * @param Point corresponde a la imagen que se desea mostrar
+ */
 void bluidPoints(points pointsObj[], sf::Texture &Point){
 
     int posiciones_puntos[31][2]={{260,65},{360, 65},{460, 65},{560,65},
@@ -81,6 +92,12 @@ void bluidPoints(points pointsObj[], sf::Texture &Point){
     }
 }
 
+/**
+ * @brief se encarga de crear la ventana de juego junto con todos los componentes que se muestran en el trascurso del juego
+ * @param nivel corresponde al nivel que se esta jugando
+ * @param puntuacion corresponde a la puntuacion que el jugador tiene
+ * @return retorna un numero no significativo
+ */
 int PacMan::game( int nivel, int puntuacion) {
 
     ghosts ghost;
@@ -166,11 +183,11 @@ int PacMan::game( int nivel, int puntuacion) {
     if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
-    points pointsObj[32];
+    points pointsObj[31];
     bluidPoints(pointsObj, Point);
 
     int x = 850;
-    int y = 60;
+    int y = 65;
     bool front = false;
     sf::Texture ghostTexture;
     if (!ghostTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
@@ -390,7 +407,7 @@ int PacMan::game( int nivel, int puntuacion) {
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
-                        pointsObj[i].seteat(true);
+                        pointsObj[i].seteat(true); //Indica cual punto fue comido
                     }
                 }
             }
@@ -400,6 +417,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 move_ghost = false;
             }
 
+            //Movimiento aleatorio
             if(ghost_normal_move_lvl1){
                 if(flag_1){
                     if(ghost.getghostX() > 848 && ghost.getghostX() < 855 && ghost.getghostY() > 305 && ghost.getghostY() < 310){
@@ -570,7 +588,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 if(power_player){
                     scoreText.setString("Puntuacion : " + std::to_string(score+=50));
                     ghost.setPosition(1000,1000);
-                    more = true;
+                    set_ghost = true;
                 }
                 else{
                     int ramon = rand() % 3;
@@ -583,16 +601,17 @@ int PacMan::game( int nivel, int puntuacion) {
 
             }
 
-            if(more){
+            if(set_ghost){
                 if (loop % 200 == 0)
                 {
                     counter ++;
                     if (counter == 5){
-                        ghost.setPosition(850,60);
+                        ghost.setPosition(850,65);
                         move_ghost = true;
                         ghost_normal_move_lvl1 = true;
                         backtracking_move_lvl1 = false;
                         direccion_lvl1 = 'l';
+                        power_player = false;
 
                     }
                 }
@@ -625,7 +644,7 @@ int PacMan::game( int nivel, int puntuacion) {
             {
                 window.draw(blockObj[i]);
             }
-            for (int i = 0; i < 32; i++)//draw points
+            for (int i = 0; i < 31; i++)//draw points
             {
                 window.draw(pointsObj[i]);
             }
@@ -683,7 +702,6 @@ int PacMan::game( int nivel, int puntuacion) {
             }
         }
 
-        cout << verification << endl;
 
         //Cambia de nivel
         if(verification == 0){

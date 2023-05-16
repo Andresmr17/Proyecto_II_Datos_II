@@ -41,10 +41,7 @@ bool click = true;
 bool ghost_move4 = true;
 int playerLives4 = 3;
 int loop4 = 1;
-bool juego4 = true;
-int randomEnemy4 = 0;
-int countDeadEnemy4 = 0;
-bool isDeath4 = false;
+
 
 bool press_flag4 = true;
 bool flag_up4 = true;
@@ -57,6 +54,19 @@ bool turnPoweron4_1 = false;
 bool turnPoweron4_2 = false;
 bool eaten4 = false;
 
+int verification_lvl4 = 0;
+bool power_player_lvl4 = false;
+int eliminate_ghost_lvl4 = 0;
+bool set_ghostlvl4 = false;
+int counter4 = 0;
+bool one_lvl4 = true;
+
+/**
+ * @brief se encarga de hacer la intancia de las paredes mostradas en el juego
+ * @param blockObj el objeto que se desea instanciar
+ * @param Obstaculo la imagen que se desea colocar
+ * @return no tiene retorno
+ */
 void buildobstacles4(block blockObj[5], sf::Texture &Obstaculo)
 {
     blockObj[0]= block(70, 530, 120, 69, Obstaculo);
@@ -65,6 +75,12 @@ void buildobstacles4(block blockObj[5], sf::Texture &Obstaculo)
     blockObj[3]= block(70, 120, 770, 100, Obstaculo);
     blockObj[4]= block(70, 430, 770, 100, Obstaculo);
 }
+
+/**
+ * @brief se encarga de instanciar los puntos que se van a mostrar en la pantalla de juego
+ * @param pointsObj son los objetos puntos que se van a crear
+ * @param Point corresponde a la imagen que se desea mostrar
+ */
 void bluidPoints4(points pointsObj[], sf::Texture &Point){
     int posiciones_puntos[39][2]={{20,555},{220,555},{320, 555},{550, 555},{650,555},
                                   {750, 555},{860, 555},{860,450},{860,350},{860,250},{860,150},
@@ -76,9 +92,16 @@ void bluidPoints4(points pointsObj[], sf::Texture &Point){
     };
     for(int i = 0; i < 39; i++){
         pointsObj[i] = points(posiciones_puntos[i][0],posiciones_puntos[i][1], Point);
+        pointsObj[i].seteat(false);
     }
 }
 
+/**
+ * @brief se encarga de crear la ventana de juego junto con todos los componentes que se muestran en el trascurso del juego
+ * @param nivel corresponde al nivel que se esta jugando
+ * @param puntuacion corresponde a la puntuacion que el jugador tiene
+ * @return retorna un numero no significativo
+ */
 int PacMan4::game(int nivel, int puntuacion) {
     ghosts ghost[4];
 
@@ -107,7 +130,7 @@ int PacMan4::game(int nivel, int puntuacion) {
 
     //Fuente del texto
     sf::Font font;
-    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
+    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
         std::cout << "Can't load font";
     }
 
@@ -135,7 +158,7 @@ int PacMan4::game(int nivel, int puntuacion) {
 
     //Arrow up - Down
     sf::Texture upDown;
-    if (!upDown.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
+    if (!upDown.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
         std::cout << "Error load image";
     }
 
@@ -148,7 +171,7 @@ int PacMan4::game(int nivel, int puntuacion) {
 
     //create obstacles objects
     sf::Texture Obstaculo;
-    if (!Obstaculo.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
+    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
         std::cout << "Error load image";
     }
     //create blok array
@@ -157,7 +180,7 @@ int PacMan4::game(int nivel, int puntuacion) {
     buildobstacles4(blockObj, Obstaculo);
 
     sf::Texture Point;
-    if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
+    if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
     points pointsObj[40];
@@ -167,19 +190,19 @@ int PacMan4::game(int nivel, int puntuacion) {
     bool front = false;
 
     sf::Texture ghost1Texture;
-    if (!ghost1Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    if (!ghost1Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
     sf::Texture ghost2Texture;
-    if (!ghost2Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
+    if (!ghost2Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
         std::cout << "Error load image";
     }
     sf::Texture ghost3Texture;
-    if (!ghost3Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma3.png")) {
+    if (!ghost3Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma3.png")) {
         std::cout << "Error load image";
     }
     sf::Texture ghost4Texture;
-    if (!ghost4Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma4.png")) {
+    if (!ghost4Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma4.png")) {
         std::cout << "Error load image";
     }
 
@@ -190,7 +213,7 @@ int PacMan4::game(int nivel, int puntuacion) {
     sf::Sprite background;
     sf::Vector2u TextureSize;  //Added to store texture size.
     sf::Vector2u WindowSize;   //Added to store window size.
-    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
+    if (!backgroundPic.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
         std::cout << "Error load image";
     } else {
         TextureSize = backgroundPic.getSize(); //Get size of texture.
@@ -205,16 +228,16 @@ int PacMan4::game(int nivel, int puntuacion) {
     sf::Texture Down;
     sf::Texture Right;
     sf::Texture Left;
-    if (!Up.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
+    if (!Up.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
         std::cout << "Error load image";
     }
-    if (!Down.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
+    if (!Down.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
         std::cout << "Error load image";
     }
-    if (!Right.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
+    if (!Right.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
         std::cout << "Error load image";
     }
-    if (!Left.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
+    if (!Left.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
         std::cout << "Error load image";
     }
 
@@ -231,7 +254,7 @@ int PacMan4::game(int nivel, int puntuacion) {
     ghost[3].setTexture(&ghost4Texture);
 
     sf::Texture powerTexture;
-    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+    if (!powerTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
         std::cout << "Error load image";
     }
 
@@ -376,6 +399,7 @@ int PacMan4::game(int nivel, int puntuacion) {
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
+                        pointsObj[i].seteat(true); //Indica cual punto fue comido
                     }
                 }
             }
@@ -786,12 +810,7 @@ int PacMan4::game(int nivel, int puntuacion) {
                     ghost4_flag3_lvl4 = true;
                 }
 
-
-
             }
-
-
-
 
             //Movimiento de los fantasmas
 
@@ -837,13 +856,69 @@ int PacMan4::game(int nivel, int puntuacion) {
 
             for(int i = 0; i < 4; i++){
                 if(ghost[i].getGlobalBounds().intersects(player1.getGlobalBounds())){
-                    int ramon = rand() % 4;
-                    a = ramon_x[ramon];
-                    b = ramon_y[ramon];
-                    player1.playerX = a;
-                    player1.playerY = b;
-                    playerLives4 --;
+                    if(power_player_lvl4){
+                        scoreText.setString("Puntuacion : " + std::to_string(score+=50));
+                        ghost[i].setPosition(1000,1000);
+                        eliminate_ghost_lvl4 = i;
+                        set_ghostlvl4 = true;
+
+                    }
+                    else{
+                        int ramon = rand() % 4;
+                        a = ramon_x[ramon];
+                        b = ramon_y[ramon];
+                        player1.playerX = a;
+                        player1.playerY = b;
+                        playerLives4 --;
+                    }
+
                 }
+            }
+
+            if(set_ghostlvl4){
+                if (loop4 % 200 == 0)
+                {
+                    counter4 ++;
+                    if (counter4 == 5){
+                        ghost[eliminate_ghost_lvl4].setPosition(5,60);
+
+                        ghost_normal_move_lvl4 = true;
+                        backtracking_move_lvl4 = false;
+                        direccion_lvl4[eliminate_ghost_lvl4] = 'd';
+                        power_player_lvl4 = false;
+
+                    }
+                }
+            }
+
+            if(turnPoweron4_1){
+                if(fruit.getGlobalBounds().intersects(player1.getGlobalBounds())){
+                    cout << "El poder fue comido por el PacMan" << endl;
+                    power_player_lvl4 = true;
+                    fruit.setPosition(1000, 1000);
+                    one_lvl4 = false;
+                }
+                for(int i = 0; i < 4; i++){
+                    if (fruit.getGlobalBounds().intersects(ghost[i].getGlobalBounds())){
+
+                    }
+                }
+
+            }
+
+            if(turnPoweron4_2){
+                if(fruit.getGlobalBounds().intersects(player1.getGlobalBounds())){
+                    cout << "El poder fue comido por el PacMan" << endl;
+                    power_player_lvl4 = true;
+                    fruit.setPosition(1000, 1000);
+                    one_lvl4 = false;
+                }
+                for(int i = 0; i < 4; i++){
+                    if (fruit.getGlobalBounds().intersects(ghost[i].getGlobalBounds())){
+
+                    }
+                }
+
             }
 
 
@@ -893,28 +968,50 @@ int PacMan4::game(int nivel, int puntuacion) {
         }
         window.draw(player1);
 
-        if (score == 1000){
+        if (puntuacion + 200 == score){
             turnPoweron4_1 = true;
         }
 
-        if (turnPoweron4_1 == true){
-            fruit.setPosition(585, 545);
-            window.draw(fruit);
+        if (turnPoweron4_1){
+            if(one_lvl4){
+                fruit.setPosition(585, 545);
+                window.draw(fruit);
+            }
+
         }
 
-        if (score == 1200){
+        if (puntuacion + 400 == score){
             turnPoweron4_2 = true;
         }
 
-        if (turnPoweron4_2 == true){
-            fruit.setPosition(310, 230);
-            window.draw(fruit);
+        if (turnPoweron4_2){
+            if(one_lvl4){
+                fruit.setPosition(310, 230);
+                window.draw(fruit);
+            }
+
         }
 
         if (playerLives4 == 0){
             puntuacion_final puntos;
             return puntos.p(score);
         }
+
+        //Detecta si todos los puntos fueron comidos
+        for(int i = 0; i < 31; i++){
+            if(!pointsObj[i].geteat()){
+                verification_lvl4 ++;
+            }
+        }
+
+        //Cambia de nivel
+        if(verification_lvl4 == 0){
+            window.close();
+            puntuacion_final puntos;
+            return puntos.p(score);
+        }
+
+        verification_lvl4 = 0;
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             if(click){

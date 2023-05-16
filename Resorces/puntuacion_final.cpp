@@ -11,7 +11,7 @@ using namespace std;
  * @return Retorna la ventana del juego.
  */
 
-constexpr const char* const fondo = "/home/luis/CLionProjects/Proyecto_II_Datos_II/images/puntos.png";
+constexpr const char* const fondo = "/home/andres/CLionProjects/Proyecto_II_Datos_II/images/puntos.png";
 
 int puntuacion_final::p(int score)
 {
