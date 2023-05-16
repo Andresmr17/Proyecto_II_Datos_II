@@ -268,7 +268,7 @@ int PacMan2::game( int nivel, int puntuacion) {
 
 
                     player1.setTexture(&Left);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 6; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_right2 && flag_up2 && flag_down2) {
                                 //player1.playerX += 0;
@@ -300,7 +300,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                     press_flag2 = false;
                     player1.setTexture(&Right);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 6; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_left2 && flag_up2 && flag_down2) {
                                 //player1.playerX += 0;
@@ -331,7 +331,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                     press_flag2 = false;
                     player1.setTexture(&Up);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 6; i++) {
 
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
 
@@ -363,7 +363,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
                     press_flag2 = false;
                     player1.setTexture(&Down);
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 6; i++) {
                         if (blockObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                             if (flag_left2 && flag_up2 && flag_right2) {
                                 //player1.playerX += 0;

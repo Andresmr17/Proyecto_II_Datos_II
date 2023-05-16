@@ -50,6 +50,8 @@ bool flag_8 = true;
 bool move_ghost = true;
 bool power_player = false;
 bool one = true;
+bool next_lvl = false;
+int verification = 0;
 
 
 void buildobstacles(block blockObj[4], sf::Texture &Obstaculo)
@@ -73,6 +75,7 @@ void bluidPoints(points pointsObj[], sf::Texture &Point){
 
     for(int i = 0; i < 31; i++){
         pointsObj[i] = points(posiciones_puntos[i][0],posiciones_puntos[i][1], Point);
+        pointsObj[i].seteat(false);
 
     }
 }
@@ -386,6 +389,7 @@ int PacMan::game( int nivel, int puntuacion) {
                     if (pointsObj[i].getGlobalBounds().intersects(player1.getGlobalBounds())) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=10));
                         pointsObj[i].setPosition(1000,1000);
+                        pointsObj[i].seteat(true);
                     }
                 }
             }
@@ -616,7 +620,6 @@ int PacMan::game( int nivel, int puntuacion) {
             timeSinceLastUpdate = sf::Time::Zero;
             loop++;
 
-
         }
 
         window.draw(ghost);
@@ -651,14 +654,24 @@ int PacMan::game( int nivel, int puntuacion) {
             return puntos.p(score);
         }
 
-        //Detecta si la puntuación máxima fue alcanzada
-        if (score == 310) {
-            if (playerLives =! 0) {
-                window.close();
-                PacMan2 pacman;
-                return pacman.game(nivel + 1, score);;
+
+        //Detecta si todos los puntos fueron comidos
+        for(int i = 0; i < 31; i++){
+            if(!pointsObj[i].geteat()){
+                verification ++;
             }
         }
+
+        cout << verification << endl;
+
+        //Cambia de nivel
+        if(verification == 0){
+            window.close();
+            PacMan2 pacman;
+            return pacman.game(nivel + 1, score);
+        }
+
+        verification = 0;
 
 
         window.display();
