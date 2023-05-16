@@ -34,7 +34,8 @@ bool flag_left = true;
 
 bool turnPoweron_1 = false;
 bool turnPoweron_2 = false;
-bool eaten = false;
+bool more = false;
+int counter = 0;
 
 bool ghost_normal_move_lvl1 = true;
 bool backtracking_move_lvl1 = false;
@@ -569,6 +570,7 @@ int PacMan::game( int nivel, int puntuacion) {
                 if(power_player){
                     scoreText.setString("Puntuacion : " + std::to_string(score+=50));
                     ghost.setPosition(1000,1000);
+                    more = true;
                 }
                 else{
                     int ramon = rand() % 3;
@@ -581,14 +583,33 @@ int PacMan::game( int nivel, int puntuacion) {
 
             }
 
+            if(more){
+                if (loop % 200 == 0)
+                {
+                    counter ++;
+                    if (counter == 5){
+                        ghost.setPosition(850,60);
+                        move_ghost = true;
+                        ghost_normal_move_lvl1 = true;
+                        backtracking_move_lvl1 = false;
+                        direccion_lvl1 = 'l';
+
+                    }
+                }
+            }
+
             if(turnPoweron_1){
                 if(fruit.getGlobalBounds().intersects(player1.getGlobalBounds())){
-                    cout << "hola" << endl;
+                    cout << "El poder fue comido por el PacMan" << endl;
                     power_player = true;
                     fruit.setPosition(1000, 1000);
                     one = false;
                 }
+                else if (fruit.getGlobalBounds().intersects(ghost.getGlobalBounds())){
+
+                }
             }
+
 
 
             // update player position

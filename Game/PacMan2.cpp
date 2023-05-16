@@ -108,7 +108,7 @@ int PacMan2::game( int nivel, int puntuacion) {
 
     //Fuente del texto
     sf::Font font;
-    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
+    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf")) {
         std::cout << "Can't load font";
     }
 
@@ -138,7 +138,7 @@ int PacMan2::game( int nivel, int puntuacion) {
 
     //Arrow up - Down
     sf::Texture upDown;
-    if (!upDown.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
+    if (!upDown.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/UD.png")) {
         std::cout << "Error load image";
     }
 
@@ -152,7 +152,7 @@ int PacMan2::game( int nivel, int puntuacion) {
 
     //create obstacles objects
     sf::Texture Obstaculo;
-    if (!Obstaculo.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
+    if (!Obstaculo.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Obstaculo.png")) {
         std::cout << "Error load image";
     }
     //create blok array
@@ -162,7 +162,7 @@ int PacMan2::game( int nivel, int puntuacion) {
     buildobstacles2(blockObj, Obstaculo);
 
     sf::Texture Point;
-    if (!Point.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
+    if (!Point.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/pac-dot.png")) {
         std::cout << "Error load image";
     }
     points pointsObj[32];
@@ -170,11 +170,11 @@ int PacMan2::game( int nivel, int puntuacion) {
 
     bool front = false;
     sf::Texture ghost1Texture;
-    if (!ghost1Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
+    if (!ghost1Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma1.png")) {
         std::cout << "Error load image";
     }
     sf::Texture ghost2Texture;
-    if (!ghost2Texture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
+    if (!ghost2Texture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Fantasma2.png")) {
         std::cout << "Error load image";
     }
 
@@ -186,7 +186,7 @@ int PacMan2::game( int nivel, int puntuacion) {
     sf::Sprite background;
     sf::Vector2u TextureSize;  //Added to store texture size.
     sf::Vector2u WindowSize;   //Added to store window size.
-    if (!backgroundPic.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
+    if (!backgroundPic.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/fondo.png")) {
         std::cout << "Error load image";
     } else {
         TextureSize = backgroundPic.getSize(); //Get size of texture.
@@ -204,21 +204,21 @@ int PacMan2::game( int nivel, int puntuacion) {
     sf::Texture Down;
     sf::Texture Right;
     sf::Texture Left;
-    if (!Up.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
+    if (!Up.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Up.png")) {
         std::cout << "Error load image";
     }
-    if (!Down.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
+    if (!Down.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Down.png")) {
         std::cout << "Error load image";
     }
-    if (!Right.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
+    if (!Right.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Right.png")) {
         std::cout << "Error load image";
     }
-    if (!Left.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
+    if (!Left.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Left.png")) {
         std::cout << "Error load image";
     }
 
     sf::Texture powerTexture;
-    if (!powerTexture.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
+    if (!powerTexture.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/Power.png")) {
         std::cout << "Error load image";
     }
 
@@ -689,15 +689,16 @@ int PacMan2::game( int nivel, int puntuacion) {
                 }
             }
 
-            if(ghost[0].getGlobalBounds().intersects(player1.getGlobalBounds()) || ghost[1].getGlobalBounds().intersects(player1.getGlobalBounds())){
-                int ramon = rand() % 4;
-                a = ramon_x[ramon];
-                b = ramon_y[ramon];
-                player1.playerX = a;
-                player1.playerY = b;
-                playerLives2 --;
+            for(int i = 0; i < 2; i++){
+                if(ghost[i].getGlobalBounds().intersects(player1.getGlobalBounds())){
+                    int ramon = rand() % 4;
+                    a = ramon_x[ramon];
+                    b = ramon_y[ramon];
+                    player1.playerX = a;
+                    player1.playerY = b;
+                    playerLives2 --;
+                }
             }
-
 
             // update player position
             player1.setPosition(player1.playerX, player1.playerY);
@@ -753,7 +754,7 @@ int PacMan2::game( int nivel, int puntuacion) {
         }
 
         if (turnPoweron2_1 == true){
-            fruit.setPosition(10, 65);
+            fruit.setPosition(555, 300);
             window.draw(fruit);
         }
 
@@ -761,22 +762,13 @@ int PacMan2::game( int nivel, int puntuacion) {
             turnPoweron2_2 = true;
         }
         if (turnPoweron2_2 == true){
-            fruit.setPosition(555, 300);
+            fruit.setPosition(10, 65);
             window.draw(fruit);
         }
 
         if (playerLives2 == 0){
             puntuacion_final puntos;
             return puntos.p(score);
-        }
-
-        //Detecta si la puntuación máxima fue alcanzada
-        if (score == 620) {
-            if (playerLives2 =! 0) {
-                window.close();
-                PacMan2 pacman;
-                return pacman.game(nivel + 1, score);;
-            }
         }
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
