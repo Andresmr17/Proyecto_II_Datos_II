@@ -10,7 +10,7 @@
 #include "../Player/player.h"
 #include "../Resorces/points.h"
 #include "../ghosts/ghosts.h"
-#include "../Server.h"
+#include "../Server/Server.h"
 #include <thread>
 #include <iostream>
 #include <string>
