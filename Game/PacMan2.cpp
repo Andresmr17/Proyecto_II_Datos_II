@@ -1129,6 +1129,3 @@ int PacMan2::game( int nivel, int puntuacion) {
         window.display();
     }
 
-
-    return 0;
-}
