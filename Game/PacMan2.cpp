@@ -667,7 +667,7 @@ int PacMan2::game( int nivel, int puntuacion) {
                     ghost2_flag4_lvl2 = true;
                 }
             }
-            }
+
 
             //Movimiento del fantasma rosado
             if(ghost_normal_move_lvl2){
