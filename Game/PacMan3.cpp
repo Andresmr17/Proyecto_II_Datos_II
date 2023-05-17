@@ -1096,6 +1096,7 @@ int PacMan3::game( int nivel, int puntuacion) {
                         scoreText.setString("Puntuacion : " + std::to_string(score+=50));
                         ghost[i].setPosition(1000,1000);
                         eliminate_ghost_lvl3 = i;
+                        cout << "el fantasma eliminado fue " << i << endl;
                         set_ghostlvl3 = true;
                     }
                     else{
@@ -1111,7 +1112,8 @@ int PacMan3::game( int nivel, int puntuacion) {
             }
 
             if(set_ghostlvl3){
-                if (loop3 % 200 == 0)
+                cout << loop3 % 200 << endl;
+                if (loop3 % 700 == 0)
                 {
                     counter3 ++;
                     if (counter3 == 5){
@@ -1124,6 +1126,7 @@ int PacMan3::game( int nivel, int puntuacion) {
 
                     }
                 }
+
             }
 
             if(turnPoweron3_1){
@@ -1166,6 +1169,7 @@ int PacMan3::game( int nivel, int puntuacion) {
             // reset the timeSinceLastUpdate to 0
             timeSinceLastUpdate = sf::Time::Zero;
             loop3++;
+
         }
 
         window.draw(ghost[0]);

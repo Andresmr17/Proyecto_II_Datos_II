@@ -1033,13 +1033,9 @@ int PacMan2::game( int nivel, int puntuacion) {
                 if (loop2 % 200 == 0) {
                     counter2++;
                     if (counter2 == 5) {
-                        ghost[eliminate_ghost].setPosition(10, 220);
-
                         ghost_normal_move_lvl2 = true;
                         backtracking_move_lvl2 = false;
-                        direccion_lvl2[eliminate_ghost] = 'd';
                         power_player_lvl2 = false;
-
                     }
                 }
             }
