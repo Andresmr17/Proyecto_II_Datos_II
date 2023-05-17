@@ -1,7 +1,17 @@
 #include "power.h"
 
+/**
+ * @brief método destructor de la clase power
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 power::power() {}
 
+/**
+ * @brief método destructor de la clase power
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 power::~power() {}
 
 /**

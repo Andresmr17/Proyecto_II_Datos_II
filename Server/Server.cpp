@@ -6,6 +6,11 @@
 #include <thread>
 #include "Server.h"
 
+/**
+ * @brief Metodo encargado de crear los sockets con los que se conecta con android studio
+ * @param null no tiene parametros
+ * @return No tiene retorno
+ */
 void SocketServer() {
     int server_fd, new_socket;
     struct sockaddr_in address;
@@ -82,6 +87,11 @@ void SocketServer() {
     }
 }
 
+/**
+ * @brief Se encarga de instanciar el socket con el que se conecta android studio
+ * @param null no tiene parametros
+ * @return No tiene retorno
+ */
 int Server::server() {
 
     std::thread serverThread([]() {

@@ -2,6 +2,8 @@
 
 /**
  * @brief método constructor de la clase player
+ * @param no tiene parametros
+ * @return no tiene retorno
  */
 player::player()
 {
@@ -9,7 +11,9 @@ player::player()
 }
 
 /**
- * @brief método destructor de la clase player
+ * @brief método constructor de la clase player
+ * @param no tiene parametros
+ * @return no tiene retorno
  */
 player::~player()
 {

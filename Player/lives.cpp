@@ -1,9 +1,20 @@
 #include"lives.h"
 
+/**
+ * @brief método destructor de la clase lives
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 lives::lives()
 {
 
 }
+
+/**
+ * @brief método destructor de la clase lives
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 lives::~lives()
 {
 

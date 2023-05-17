@@ -19,6 +19,7 @@ using namespace std;
 
 char direccion_lvl3[3] = {'d', 'd', 'd'};
 bool backtracking_move_lvl3 = false;
+bool pathfinding_move_lvl3 = true;
 bool ghost_normal_move_lvl3 = true;
 
 bool ghost1_flag1_lvl3 = true;
@@ -443,8 +444,308 @@ int PacMan3::game( int nivel, int puntuacion) {
                 }
             }
 
+            //Movimiento en backtracking
             if(backtracking_move_lvl3){
-                //Se debe poner el movimiento del backtracking
+
+                //Movimiento del fantasma naranja
+                if(ghost1_flag1_lvl3){
+                    if(ghost[0].getghostX() > 845 && ghost[0].getghostX() < 852 && ghost[0].getghostY() > 301 && ghost[0].getghostY() < 305)//1
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[0] = dir[num];
+                        ghost1_flag1_lvl3 = false;
+                        ghost1_flag2_lvl3 = true;
+                        ghost1_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[0].getghostX() > 845 && ghost[0].getghostX() < 852 && ghost[0].getghostY() > 545 && ghost[0].getghostY() < 550)//2
+                {
+                    direccion_lvl3[0] = 'u';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+                if(ghost[0].getghostX() > 845 && ghost[0].getghostX() < 852 && ghost[0].getghostY() > 73 && ghost[0].getghostY() < 75)//3
+                {
+                    direccion_lvl3[0] = 'd';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+
+                if(ghost1_flag2_lvl3){
+                    if(ghost[0].getghostX() > 137 && ghost[0].getghostX() < 140 && ghost[0].getghostY() > 301 && ghost[0].getghostY() < 305)//4
+                    {
+                        char dir[4] = {'l', 'd', 'u', 'r'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl3[0] = dir[num];
+                        ghost1_flag2_lvl3 = false;
+                        ghost1_flag1_lvl3 = true;
+                        ghost1_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[0].getghostX() > 137 && ghost[0].getghostX() < 140 && ghost[0].getghostY() > 176 && ghost[0].getghostY() < 180)//5
+                {
+                    if(direccion_lvl3[0] == 'u'){
+                        direccion_lvl3[0] = 'r';
+                    }
+                    if(direccion_lvl3[0] == 'l'){
+                        direccion_lvl3[0] = 'd';
+                        ghost1_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[0].getghostX() > 743 && ghost[0].getghostX() < 745 && ghost[0].getghostY() > 176 && ghost[0].getghostY() < 180)//6
+                {
+                    direccion_lvl3[0] = 'l';
+                }
+
+                if(ghost[0].getghostX() > 137 && ghost[0].getghostX() < 140 && ghost[0].getghostY() > 435 && ghost[0].getghostY() < 439)//7
+                {
+                    if(direccion_lvl3[0] == 'd'){
+                        direccion_lvl3[0] = 'r';
+                    }
+                    if(direccion_lvl3[0] == 'l'){
+                        direccion_lvl3[0] = 'u';
+                        ghost1_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[0].getghostX() > 743 && ghost[0].getghostX() < 745 && ghost[0].getghostY() > 435 && ghost[0].getghostY() < 439)//8
+                {
+                    direccion_lvl3[0] = 'l';
+                }
+
+                if(ghost1_flag3_lvl3){
+                    if(ghost[0].getghostX() > 16 && ghost[0].getghostX() < 18 && ghost[0].getghostY() > 301 && ghost[0].getghostY() < 305)//9
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[0] = dir[num];
+                        ghost1_flag2_lvl3 = true;
+                        ghost1_flag1_lvl3 = true;
+                        ghost1_flag3_lvl3 = false;
+                    }
+                }
+                if(ghost[0].getghostX() > 16 && ghost[0].getghostX() < 18 && ghost[0].getghostY() > 73 && ghost[0].getghostY() < 75)//10
+                {
+                    direccion_lvl3[0] = 'd';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+                if(ghost[0].getghostX() > 16 && ghost[0].getghostX() < 18 && ghost[0].getghostY() > 545 && ghost[0].getghostY() < 550)//11
+                {
+                    direccion_lvl3[0] = 'u';
+                    ghost1_flag1_lvl3 = true;
+                    ghost1_flag2_lvl3 = true;
+                    ghost1_flag3_lvl3 = true;
+                }
+
+                //Movimiento del fantasma rosado
+                if(ghost2_flag1_lvl3){
+                    if(ghost[1].getghostX() > 845 && ghost[1].getghostX() < 852 && ghost[1].getghostY() > 301 && ghost[1].getghostY() < 305)//1
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[1] = dir[num];
+                        ghost2_flag1_lvl3 = false;
+                        ghost2_flag2_lvl3 = true;
+                        ghost2_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[1].getghostX() > 845 && ghost[1].getghostX() < 852 && ghost[1].getghostY() > 545 && ghost[1].getghostY() < 550)//2
+                {
+                    direccion_lvl3[1] = 'u';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+                if(ghost[1].getghostX() > 845 && ghost[1].getghostX() < 852 && ghost[1].getghostY() > 73 && ghost[1].getghostY() < 75)//3
+                {
+                    direccion_lvl3[1] = 'd';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+
+                if(ghost2_flag2_lvl3){
+                    if(ghost[1].getghostX() > 137 && ghost[1].getghostX() < 140 && ghost[1].getghostY() > 301 && ghost[1].getghostY() < 305)//4
+                    {
+                        char dir[4] = {'l', 'd', 'u', 'r'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl3[1] = dir[num];
+                        ghost2_flag2_lvl3 = false;
+                        ghost2_flag1_lvl3 = true;
+                        ghost2_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[1].getghostX() > 137 && ghost[1].getghostX() < 140 && ghost[1].getghostY() > 176 && ghost[1].getghostY() < 180)//5
+                {
+                    if(direccion_lvl3[1] == 'u'){
+                        direccion_lvl3[1] = 'r';
+                    }
+                    if(direccion_lvl3[1] == 'l'){
+                        direccion_lvl3[1] = 'd';
+                        ghost2_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[1].getghostX() > 743 && ghost[1].getghostX() < 745 && ghost[1].getghostY() > 176 && ghost[1].getghostY() < 180)//6
+                {
+                    direccion_lvl3[1] = 'l';
+                }
+
+                if(ghost[1].getghostX() > 137 && ghost[1].getghostX() < 140 && ghost[1].getghostY() > 435 && ghost[1].getghostY() < 439)//7
+                {
+                    if(direccion_lvl3[1] == 'd'){
+                        direccion_lvl3[1] = 'r';
+                    }
+                    if(direccion_lvl3[1] == 'l'){
+                        direccion_lvl3[1] = 'u';
+                        ghost2_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[1].getghostX() > 743 && ghost[1].getghostX() < 745 && ghost[1].getghostY() > 435 && ghost[1].getghostY() < 439)//8
+                {
+                    direccion_lvl3[1] = 'l';
+                }
+
+                if(ghost2_flag3_lvl3){
+                    if(ghost[1].getghostX() > 16 && ghost[1].getghostX() < 18 && ghost[1].getghostY() > 301 && ghost[1].getghostY() < 305)//9
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[1] = dir[num];
+                        ghost2_flag2_lvl3 = true;
+                        ghost2_flag1_lvl3 = true;
+                        ghost2_flag3_lvl3 = false;
+                    }
+                }
+                if(ghost[1].getghostX() > 16 && ghost[1].getghostX() < 18 && ghost[1].getghostY() > 73 && ghost[1].getghostY() < 75)//10
+                {
+                    direccion_lvl3[1] = 'd';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+                if(ghost[1].getghostX() > 16 && ghost[1].getghostX() < 18 && ghost[1].getghostY() > 545 && ghost[1].getghostY() < 550)//11
+                {
+                    direccion_lvl3[1] = 'u';
+                    ghost2_flag1_lvl3 = true;
+                    ghost2_flag2_lvl3 = true;
+                    ghost2_flag3_lvl3 = true;
+                }
+            }
+
+            //Movimiento en pathfinding
+            if(pathfinding_move_lvl3){
+                if(ghost3_flag1_lvl3){
+                    if(ghost[2].getghostX() > 845 && ghost[2].getghostX() < 852 && ghost[2].getghostY() > 301 && ghost[2].getghostY() < 305)//1
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[2] = dir[num];
+                        ghost3_flag1_lvl3 = false;
+                        ghost3_flag2_lvl3 = true;
+                        ghost3_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[2].getghostX() > 845 && ghost[2].getghostX() < 852 && ghost[2].getghostY() > 545 && ghost[2].getghostY() < 550)//2
+                {
+                    direccion_lvl3[2] = 'u';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+                if(ghost[2].getghostX() > 845 && ghost[2].getghostX() < 852 && ghost[2].getghostY() > 73 && ghost[2].getghostY() < 75)//3
+                {
+                    direccion_lvl3[2] = 'd';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+
+                if(ghost3_flag2_lvl3){
+                    if(ghost[2].getghostX() > 137 && ghost[2].getghostX() < 140 && ghost[2].getghostY() > 301 && ghost[2].getghostY() < 305)//4
+                    {
+                        char dir[4] = {'l', 'd', 'u', 'r'};
+                        srand(time(NULL));
+                        int num = rand()%4;
+                        direccion_lvl3[2] = dir[num];
+                        ghost3_flag2_lvl3 = false;
+                        ghost3_flag1_lvl3 = true;
+                        ghost3_flag3_lvl3 = true;
+                    }
+                }
+                if(ghost[2].getghostX() > 137 && ghost[2].getghostX() < 140 && ghost[2].getghostY() > 176 && ghost[2].getghostY() < 180)//5
+                {
+                    if(direccion_lvl3[2] == 'u'){
+                        direccion_lvl3[2] = 'r';
+                    }
+                    if(direccion_lvl3[2] == 'l'){
+                        direccion_lvl3[2] = 'd';
+                        ghost3_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[2].getghostX() > 743 && ghost[2].getghostX() < 745 && ghost[2].getghostY() > 176 && ghost[2].getghostY() < 180)//6
+                {
+                    direccion_lvl3[2] = 'l';
+                }
+
+                if(ghost[2].getghostX() > 137 && ghost[2].getghostX() < 140 && ghost[2].getghostY() > 435 && ghost[2].getghostY() < 439)//7
+                {
+                    if(direccion_lvl3[2] == 'd'){
+                        direccion_lvl3[2] = 'r';
+                    }
+                    if(direccion_lvl3[2] == 'l'){
+                        direccion_lvl3[2] = 'u';
+                        ghost3_flag2_lvl3 = true;
+                    }
+
+                }
+                if(ghost[2].getghostX() > 743 && ghost[2].getghostX() < 745 && ghost[2].getghostY() > 435 && ghost[2].getghostY() < 439)//8
+                {
+                    direccion_lvl3[2] = 'l';
+                }
+
+                if(ghost3_flag3_lvl3){
+                    if(ghost[2].getghostX() > 16 && ghost[2].getghostX() < 18 && ghost[2].getghostY() > 301 && ghost[2].getghostY() < 305)//9
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl3[2] = dir[num];
+                        ghost3_flag2_lvl3 = true;
+                        ghost3_flag1_lvl3 = true;
+                        ghost3_flag3_lvl3 = false;
+                    }
+                }
+                if(ghost[2].getghostX() > 16 && ghost[2].getghostX() < 18 && ghost[2].getghostY() > 73 && ghost[2].getghostY() < 75)//10
+                {
+                    direccion_lvl3[2] = 'd';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+                if(ghost[2].getghostX() > 16 && ghost[2].getghostX() < 18 && ghost[2].getghostY() > 545 && ghost[2].getghostY() < 550)//11
+                {
+                    direccion_lvl3[2] = 'u';
+                    ghost3_flag1_lvl3 = true;
+                    ghost3_flag2_lvl3 = true;
+                    ghost3_flag3_lvl3 = true;
+                }
+
             }
 
             if(ghost_normal_move_lvl3){
@@ -931,6 +1232,7 @@ int PacMan3::game( int nivel, int puntuacion) {
 
         window.display();
     }
+
 
 
     return 0;

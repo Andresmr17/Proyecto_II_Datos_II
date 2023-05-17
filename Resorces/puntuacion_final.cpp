@@ -39,7 +39,7 @@ int puntuacion_final::p(int score)
     // Creamos un objeto fuente
     sf::Font font;
     // Intentamos cargarla
-    if (!font.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
+    if (!font.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/font/arial.ttf"))
     {
         return EXIT_FAILURE;
     }
@@ -54,7 +54,7 @@ int puntuacion_final::p(int score)
     // Creamos un objeto boton
     sf::Texture salir;
     // Intentamos cargarla
-    if (!salir.loadFromFile("/home/luis/CLionProjects/Proyecto_II_Datos_II/images/btnSalir2.png"))
+    if (!salir.loadFromFile("/home/andres/CLionProjects/Proyecto_II_Datos_II/images/btnSalir2.png"))
     {
         return EXIT_FAILURE;
     }

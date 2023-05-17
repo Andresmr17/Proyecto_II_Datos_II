@@ -1,10 +1,20 @@
 #include"block.h"
 
-
+/**
+ * @brief método destructor de la clase block
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 block::block()
 {
 
 }
+
+/**
+ * @brief método destructor de la clase block
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 block::~block()
 {
 

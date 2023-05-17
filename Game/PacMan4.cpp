@@ -19,6 +19,7 @@ using namespace std;
 char direccion_lvl4[4] = {'d', 'r', 'l', 'd'};
 bool backtracking_move_lvl4 = false;
 bool ghost_normal_move_lvl4 = true;
+bool pathfinding_move_lvl4 = false;
 
 bool ghost1_flag1_lvl4 = true;
 bool ghost1_flag2_lvl4 = true;
@@ -404,8 +405,410 @@ int PacMan4::game(int nivel, int puntuacion) {
                 }
             }
 
+            //Movimiento de los fantasmas en backtracking
             if(backtracking_move_lvl4){
-                //Se agrega la logica del backtracking
+                if(ghost1_flag1_lvl4)
+                {
+                    if(ghost[0].getghostX() > 4 && ghost[0].getghostX() < 7 && ghost[0].getghostY() > 226 && ghost[0].getghostY() < 230)//1
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[0] = dir[num];
+                        cout << num << endl;
+                        ghost1_flag1_lvl4 = false;
+                        ghost1_flag2_lvl4 = true;
+                        ghost1_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost1_flag2_lvl4)
+                {
+                    if(ghost[0].getghostX() > 4 && ghost[0].getghostX() < 7 && ghost[0].getghostY() > 371 && ghost[0].getghostY() < 375)//2
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[0] = dir[num];
+                        cout << num << endl;
+                        ghost1_flag1_lvl4 = true;
+                        ghost1_flag2_lvl4 = false;
+                        ghost1_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[0].getghostX() > 4 && ghost[0].getghostX() < 7 && ghost[0].getghostY() > 537 && ghost[0].getghostY() < 539)//3
+                {
+                    direccion_lvl4[0] = 'u';
+                    ghost1_flag1_lvl4 = true;
+                    ghost1_flag2_lvl4 = true;
+                    ghost1_flag3_lvl4 = true;
+                }
+
+                if(ghost[0].getghostX() > 4 && ghost[0].getghostX() < 7 && ghost[0].getghostY() > 65 && ghost[0].getghostY() < 67)//4
+                {
+                    if( direccion_lvl4[0] == 'u'){
+                        direccion_lvl4[0] = 'r';
+                    }
+                    if( direccion_lvl4[0] == 'l'){
+                        direccion_lvl4[0] = 'd';
+                        ghost1_flag1_lvl4 = true;
+                        ghost1_flag2_lvl4 = true;
+                        ghost1_flag3_lvl4 = true;
+                    }
+
+                }
+
+                if(ghost[0].getghostX() > 672 && ghost[0].getghostX() < 675 && ghost[0].getghostY() > 65 && ghost[0].getghostY() < 67)//5
+                {
+                    direccion_lvl4[0] = 'l';
+                }
+
+                if(ghost[0].getghostX() > 672 && ghost[0].getghostX() < 675 && ghost[0].getghostY() > 226 && ghost[0].getghostY() < 230)//6
+                {
+                    direccion_lvl4[0] = 'l';
+                    ghost1_flag1_lvl4 = true;
+                }
+
+                if(ghost1_flag3_lvl4){
+                    if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 859 && ghost[0].getghostY() > 371 && ghost[0].getghostY() < 375)//7
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[0] = dir[num];
+                        cout << num << endl;
+                        ghost1_flag1_lvl4 = true;
+                        ghost1_flag2_lvl4 = true;
+                        ghost1_flag3_lvl4 = false;
+                    }
+                }
+
+                if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 859 && ghost[0].getghostY() > 545 && ghost[0].getghostY() < 549)//8
+                {
+                    if(direccion_lvl4[0] == 'd'){
+                        direccion_lvl4[0] = 'l';
+                    }
+                    if(direccion_lvl4[0] == 'r') {
+                        direccion_lvl4[0] = 'u';
+                        ghost1_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[0].getghostX() > 200 && ghost[0].getghostX() < 205 && ghost[0].getghostY() > 545 && ghost[0].getghostY() < 549)//9
+                {
+                    direccion_lvl4[0] = 'r';
+                }
+
+                if(ghost[0].getghostX() > 855 && ghost[0].getghostX() < 859 && ghost[0].getghostY() > 65 && ghost[0].getghostY() < 67)//10
+                {
+                    direccion_lvl4[0] = 'd';
+                    ghost1_flag3_lvl4 = true;
+                }
+
+                //Movimiento del fantasma rosado
+                if(ghost2_flag1_lvl4)
+                {
+                    if(ghost[1].getghostX() > 4 && ghost[1].getghostX() < 7 && ghost[1].getghostY() > 226 && ghost[1].getghostY() < 230)//1
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[1] = dir[num];
+                        cout << num << endl;
+                        ghost2_flag1_lvl4 = false;
+                        ghost2_flag2_lvl4 = true;
+                        ghost2_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost2_flag2_lvl4)
+                {
+                    if(ghost[1].getghostX() > 4 && ghost[1].getghostX() < 7 && ghost[1].getghostY() > 371 && ghost[1].getghostY() < 375)//2
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[1] = dir[num];
+                        cout << num << endl;
+                        ghost2_flag1_lvl4 = true;
+                        ghost2_flag2_lvl4 = false;
+                        ghost2_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[1].getghostX() > 4 && ghost[1].getghostX() < 7 && ghost[1].getghostY() > 537 && ghost[1].getghostY() < 539)//3
+                {
+                    direccion_lvl4[1] = 'u';
+                    ghost2_flag1_lvl4 = true;
+                    ghost2_flag2_lvl4 = true;
+                    ghost2_flag3_lvl4 = true;
+                }
+
+                if(ghost[1].getghostX() > 4 && ghost[1].getghostX() < 7 && ghost[1].getghostY() > 65 && ghost[1].getghostY() < 67)//4
+                {
+                    if( direccion_lvl4[1] == 'u'){
+                        direccion_lvl4[1] = 'r';
+                    }
+                    if( direccion_lvl4[1] == 'l'){
+                        direccion_lvl4[1] = 'd';
+                        ghost2_flag1_lvl4 = true;
+                        ghost2_flag2_lvl4 = true;
+                        ghost2_flag3_lvl4 = true;
+                    }
+
+                }
+
+                if(ghost[1].getghostX() > 672 && ghost[1].getghostX() < 675 && ghost[1].getghostY() > 65 && ghost[1].getghostY() < 67)//5
+                {
+                    direccion_lvl4[1] = 'l';
+                }
+
+                if(ghost[1].getghostX() > 672 && ghost[1].getghostX() < 675 && ghost[1].getghostY() > 226 && ghost[1].getghostY() < 230)//6
+                {
+                    direccion_lvl4[1] = 'l';
+                    ghost2_flag1_lvl4 = true;
+                }
+
+                if(ghost2_flag3_lvl4){
+                    if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 859 && ghost[1].getghostY() > 371 && ghost[1].getghostY() < 375)//7
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[1] = dir[num];
+                        cout << num << endl;
+                        ghost2_flag1_lvl4 = true;
+                        ghost2_flag2_lvl4 = true;
+                        ghost2_flag3_lvl4 = false;
+                    }
+                }
+
+                if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 859 && ghost[1].getghostY() > 545 && ghost[1].getghostY() < 549)//8
+                {
+                    if(direccion_lvl4[1] == 'd'){
+                        direccion_lvl4[1] = 'l';
+                    }
+                    if(direccion_lvl4[1] == 'r') {
+                        direccion_lvl4[1] = 'u';
+                        ghost2_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[1].getghostX() > 200 && ghost[1].getghostX() < 205 && ghost[1].getghostY() > 545 && ghost[1].getghostY() < 549)//9
+                {
+                    direccion_lvl4[1] = 'r';
+                }
+
+                if(ghost[1].getghostX() > 855 && ghost[1].getghostX() < 859 && ghost[1].getghostY() > 65 && ghost[1].getghostY() < 67)//10
+                {
+                    direccion_lvl4[1] = 'd';
+                    ghost2_flag3_lvl4 = true;
+                }
+            }
+
+            //Movimiento en pathfinding de los fantasmas
+            if(pathfinding_move_lvl4){
+                if(ghost3_flag1_lvl4)
+                {
+                    if(ghost[2].getghostX() > 4 && ghost[2].getghostX() < 7 && ghost[2].getghostY() > 226 && ghost[2].getghostY() < 230)//1
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[2] = dir[num];
+                        cout << num << endl;
+                        ghost3_flag1_lvl4 = false;
+                        ghost3_flag2_lvl4 = true;
+                        ghost3_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost3_flag2_lvl4)
+                {
+                    if(ghost[2].getghostX() > 4 && ghost[2].getghostX() < 7 && ghost[2].getghostY() > 371 && ghost[2].getghostY() < 375)//2
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[2] = dir[num];
+                        cout << num << endl;
+                        ghost3_flag1_lvl4 = true;
+                        ghost3_flag2_lvl4 = false;
+                        ghost3_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[2].getghostX() > 4 && ghost[2].getghostX() < 7 && ghost[2].getghostY() > 537 && ghost[2].getghostY() < 539)//3
+                {
+                    direccion_lvl4[2] = 'u';
+                    ghost3_flag1_lvl4 = true;
+                    ghost3_flag2_lvl4 = true;
+                    ghost3_flag3_lvl4 = true;
+                }
+
+                if(ghost[2].getghostX() > 4 && ghost[2].getghostX() < 7 && ghost[2].getghostY() > 65 && ghost[2].getghostY() < 67)//4
+                {
+                    if( direccion_lvl4[2] == 'u'){
+                        direccion_lvl4[2] = 'r';
+                    }
+                    if( direccion_lvl4[2] == 'l'){
+                        direccion_lvl4[2] = 'd';
+                        ghost3_flag1_lvl4 = true;
+                        ghost3_flag2_lvl4 = true;
+                        ghost3_flag3_lvl4 = true;
+                    }
+
+                }
+
+                if(ghost[2].getghostX() > 672 && ghost[2].getghostX() < 675 && ghost[2].getghostY() > 65 && ghost[2].getghostY() < 67)//5
+                {
+                    direccion_lvl4[2] = 'l';
+                }
+
+                if(ghost[2].getghostX() > 672 && ghost[2].getghostX() < 675 && ghost[2].getghostY() > 226 && ghost[2].getghostY() < 230)//6
+                {
+                    direccion_lvl4[2] = 'l';
+                    ghost3_flag1_lvl4 = true;
+                }
+
+                if(ghost3_flag3_lvl4){
+                    if(ghost[2].getghostX() > 855 && ghost[2].getghostX() < 859 && ghost[2].getghostY() > 371 && ghost[2].getghostY() < 375)//7
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[2] = dir[num];
+                        cout << num << endl;
+                        ghost3_flag1_lvl4 = true;
+                        ghost3_flag2_lvl4 = true;
+                        ghost3_flag3_lvl4 = false;
+                    }
+                }
+
+                if(ghost[2].getghostX() > 855 && ghost[2].getghostX() < 859 && ghost[2].getghostY() > 545 && ghost[2].getghostY() < 549)//8
+                {
+                    if(direccion_lvl4[2] == 'd'){
+                        direccion_lvl4[2] = 'l';
+                    }
+                    if(direccion_lvl4[2] == 'r') {
+                        direccion_lvl4[2] = 'u';
+                        ghost3_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[2].getghostX() > 200 && ghost[2].getghostX() < 205 && ghost[2].getghostY() > 545 && ghost[2].getghostY() < 549)//9
+                {
+                    direccion_lvl4[2] = 'r';
+                }
+
+                if(ghost[2].getghostX() > 855 && ghost[2].getghostX() < 859 && ghost[2].getghostY() > 65 && ghost[2].getghostY() < 67)//10
+                {
+                    direccion_lvl4[2] = 'd';
+                    ghost3_flag3_lvl4 = true;
+                }
+
+                //Movimiento del fantasma rojo
+                if(ghost4_flag1_lvl4)
+                {
+                    if(ghost[3].getghostX() > 4 && ghost[3].getghostX() < 7 && ghost[3].getghostY() > 226 && ghost[3].getghostY() < 230)//1
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[3] = dir[num];
+                        cout << num << endl;
+                        ghost4_flag1_lvl4 = false;
+                        ghost4_flag2_lvl4 = true;
+                        ghost4_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost4_flag2_lvl4)
+                {
+                    if(ghost[3].getghostX() > 4 && ghost[3].getghostX() < 7 && ghost[3].getghostY() > 371 && ghost[3].getghostY() < 375)//2
+                    {
+                        char dir[3] = {'r', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[3] = dir[num];
+                        cout << num << endl;
+                        ghost4_flag1_lvl4 = true;
+                        ghost4_flag2_lvl4 = false;
+                        ghost4_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[3].getghostX() > 4 && ghost[3].getghostX() < 7 && ghost[3].getghostY() > 537 && ghost[3].getghostY() < 539)//3
+                {
+                    direccion_lvl4[3] = 'u';
+                    ghost4_flag1_lvl4 = true;
+                    ghost4_flag2_lvl4 = true;
+                    ghost4_flag3_lvl4 = true;
+                }
+
+                if(ghost[3].getghostX() > 4 && ghost[3].getghostX() < 7 && ghost[3].getghostY() > 65 && ghost[3].getghostY() < 67)//4
+                {
+                    if( direccion_lvl4[3] == 'u'){
+                        direccion_lvl4[3] = 'r';
+                    }
+                    if( direccion_lvl4[3] == 'l'){
+                        direccion_lvl4[3] = 'd';
+                        ghost4_flag1_lvl4 = true;
+                        ghost4_flag2_lvl4 = true;
+                        ghost4_flag3_lvl4 = true;
+                    }
+
+                }
+
+                if(ghost[3].getghostX() > 672 && ghost[3].getghostX() < 675 && ghost[3].getghostY() > 65 && ghost[3].getghostY() < 67)//5
+                {
+                    direccion_lvl4[3] = 'l';
+                }
+
+                if(ghost[3].getghostX() > 672 && ghost[3].getghostX() < 675 && ghost[3].getghostY() > 226 && ghost[3].getghostY() < 230)//6
+                {
+                    direccion_lvl4[3] = 'l';
+                    ghost4_flag1_lvl4 = true;
+                }
+
+                if(ghost4_flag3_lvl4){
+                    if(ghost[3].getghostX() > 855 && ghost[3].getghostX() < 859 && ghost[3].getghostY() > 371 && ghost[3].getghostY() < 375)//7
+                    {
+                        char dir[3] = {'l', 'd', 'u'};
+                        srand(time(NULL));
+                        int num = rand()%3;
+                        direccion_lvl4[3] = dir[num];
+                        cout << num << endl;
+                        ghost4_flag1_lvl4 = true;
+                        ghost4_flag2_lvl4 = true;
+                        ghost4_flag3_lvl4 = false;
+                    }
+                }
+
+                if(ghost[3].getghostX() > 855 && ghost[3].getghostX() < 859 && ghost[3].getghostY() > 545 && ghost[3].getghostY() < 549)//8
+                {
+                    if(direccion_lvl4[3] == 'd'){
+                        direccion_lvl4[3] = 'l';
+                    }
+                    if(direccion_lvl4[3] == 'r') {
+                        direccion_lvl4[3] = 'u';
+                        ghost4_flag3_lvl4 = true;
+                    }
+                }
+
+                if(ghost[3].getghostX() > 200 && ghost[3].getghostX() < 205 && ghost[3].getghostY() > 545 && ghost[3].getghostY() < 549)//9
+                {
+                    direccion_lvl4[3] = 'r';
+                }
+
+                if(ghost[3].getghostX() > 855 && ghost[3].getghostX() < 859 && ghost[3].getghostY() > 65 && ghost[3].getghostY() < 67)//10
+                {
+                    direccion_lvl4[3] = 'd';
+                    ghost4_flag3_lvl4 = true;
+                }
+
+
             }
 
             if(ghost_normal_move_lvl4){

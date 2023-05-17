@@ -1,7 +1,17 @@
 #include "points.h"
 
+/**
+ * @brief método destructor de la clase points
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 points::points() {}
 
+/**
+ * @brief método destructor de la clase points
+ * @param null no tiene parámetros
+ * @return no tiene retorno
+ */
 points::~points() {}
 
 /**
